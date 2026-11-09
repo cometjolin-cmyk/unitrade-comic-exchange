@@ -1,0 +1,1725 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UniTrade COMICS! 全國大學生二手物品交換與買賣平台 - 經典美式波普漫畫版 (全功能整合版)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Bangers & Noto Sans TC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --comic-yellow: #FACC15;
+      --comic-red: #DC2626;
+      --comic-blue: #2563EB;
+      --comic-black: #000000;
+    }
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background-color: #FEF08A;
+      background-image: 
+        radial-gradient(#F59E0B 1.8px, transparent 1.8px),
+        radial-gradient(#E11D48 1.2px, #FEF08A 1.2px);
+      background-size: 20px 20px;
+      background-position: 0 0, 10px 10px;
+      color: #000000;
+    }
+    .comic-font {
+      font-family: 'Bangers', cursive;
+      letter-spacing: 1.5px;
+    }
+    .comic-border {
+      border: 3.5px solid #000000;
+    }
+    .comic-border-sm {
+      border: 2.5px solid #000000;
+    }
+    .comic-shadow {
+      box-shadow: 5px 5px 0px #000000;
+    }
+    .comic-shadow-lg {
+      box-shadow: 8px 8px 0px #000000;
+    }
+    .comic-shadow-xl {
+      box-shadow: 12px 12px 0px #000000;
+    }
+    .comic-shadow-sm {
+      box-shadow: 3px 3px 0px #000000;
+    }
+    .comic-btn {
+      transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .comic-btn:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 8px 8px 0px #000000;
+    }
+    .comic-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px #000000;
+    }
+    .speech-bubble {
+      position: relative;
+    }
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -12px;
+      left: 24px;
+      border-width: 12px 12px 0;
+      border-style: solid;
+      border-color: #FFFFFF transparent;
+      display: block;
+      width: 0;
+    }
+    .halftone-red {
+      background-color: #DC2626;
+      background-image: radial-gradient(#991B1B 2px, transparent 2px);
+      background-size: 10px 10px;
+    }
+    .halftone-blue {
+      background-color: #2563EB;
+      background-image: radial-gradient(#1E40AF 2px, transparent 2px);
+      background-size: 10px 10px;
+    }
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #FEF08A;
+      border-left: 2px solid #000;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #DC2626;
+      border: 2px solid #000;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col pb-20 sm:pb-0">
+
+  <!-- ==================== 頂部跑馬燈公告 ==================== -->
+  <div class="bg-red-600 text-yellow-300 comic-border border-t-0 border-x-0 py-2 px-4 text-xs sm:text-sm font-black text-center tracking-widest uppercase comic-font flex items-center justify-center gap-3 overflow-hidden">
+    <span>💥 BOOM! 全國大專生二手英雄交易局 💥 POW! 教科書 3 折擊墜・以物易物當面驗貨・杜絕網路詐騙 💥 學生信箱 .edu.tw 100% 認證 💥</span>
+  </div>
+
+  <!-- ==================== 主導覽列 Navbar ==================== -->
+  <header class="bg-white comic-border border-t-0 border-x-0 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- 品牌 Logo -->
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-13 h-13 bg-yellow-400 comic-border rounded-xl flex items-center justify-center font-black text-3xl comic-shadow group-hover:rotate-12 transition-transform">
+          ⚡
+        </div>
+        <div>
+          <span class="text-3xl comic-font text-red-600 tracking-wider block leading-none drop-shadow-[2px_2px_0px_#000]">
+            UNITRADE <span class="text-blue-600">COMICS!</span>
+          </span>
+          <span class="text-[11px] font-black bg-yellow-300 text-black px-2 py-0.5 rounded comic-border-sm uppercase">
+            全國大專二手拍賣英雄總部
+          </span>
+        </div>
+      </a>
+
+      <!-- 快速關鍵字搜尋列 (桌機) -->
+      <div class="hidden lg:flex items-center flex-1 max-w-xl mx-4 gap-2">
+        <div class="relative w-44">
+          <select id="schoolSelector" onchange="filterItems()" class="w-full bg-yellow-100 comic-border rounded-xl py-2 px-3 text-xs font-black comic-shadow-sm focus:outline-none focus:bg-yellow-300 cursor-pointer">
+            <option value="all">🏛️ 全美漫大學基地</option>
+            <option value="ntu">國立臺灣大學基地 ⚡</option>
+            <option value="nycu">國立陽明交通基地 🕹️</option>
+            <option value="nthu">國立清華大學基地 🚀</option>
+            <option value="ncku">國立成功大學基地 🛹</option>
+            <option value="nccu">國立政治大學基地 🎨</option>
+          </select>
+        </div>
+        <div class="relative flex-1">
+          <input type="text" id="searchInput" oninput="filterItems()" placeholder="POW! 輸入書名、iPad、耳機、冰箱搜尋..." class="w-full bg-white comic-border rounded-xl py-2 pl-4 pr-10 text-xs font-black comic-shadow-sm focus:outline-none focus:bg-yellow-50">
+          <span class="absolute right-3 top-2 text-red-600 font-black text-base">🔍</span>
+        </div>
+      </div>
+
+      <!-- 右側動作按鈕區 -->
+      <div class="flex items-center gap-2">
+        <!-- AI 拍照上架按鈕 (AI01) -->
+        <button id="btnAiCamera" onclick="openAiCameraModal()" class="hidden md:flex items-center gap-1.5 bg-yellow-400 hover:bg-yellow-300 text-black comic-border rounded-xl px-3 py-2 text-xs font-black comic-shadow comic-btn">
+          <span>📸</span> AI 拍照速估
+        </button>
+
+        <!-- AI 導購特派員 (AI04) -->
+        <button id="btnAiChat" onclick="openAiChatModal()" class="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-yellow-200 comic-border rounded-xl px-3 py-2 text-xs font-black comic-shadow comic-btn">
+          <span>🤖</span> AI 顧問
+        </button>
+
+        <!-- 刊登物品按鈕 (F13) -->
+        <button id="btnNewListing" onclick="openListingModal()" class="flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-yellow-300 comic-border rounded-xl px-3.5 py-2 text-xs font-black comic-shadow comic-btn">
+          <span>💥</span> 快速刊登
+        </button>
+
+        <!-- 收藏抽屜觸發按鈕 (F09) -->
+        <button id="btnFavDrawer" onclick="toggleFavoritesDrawer()" class="relative w-10 h-10 bg-white hover:bg-yellow-100 comic-border rounded-xl flex items-center justify-center font-black text-lg comic-shadow cursor-pointer" title="查看收藏清單">
+          <span>⭐</span>
+          <span id="favBadge" class="hidden absolute -top-2 -right-2 bg-red-600 text-white text-[10px] w-5 h-5 rounded-full comic-border-sm flex items-center justify-center font-black">0</span>
+        </button>
+
+        <!-- 管理員後台按鈕 (F19) -->
+        <button id="btnAdminModal" onclick="openAdminModal()" class="hidden sm:flex items-center gap-1 bg-black text-yellow-300 comic-border rounded-xl px-2.5 py-2 text-xs font-black comic-shadow comic-btn" title="管理員後台審查與爭議仲裁">
+          <span>🛡️</span> 後台
+        </button>
+
+        <!-- 會員帳號登入/登出與個人基地 (F11, F12) -->
+        <div id="userProfileBtn" onclick="toggleUserCenterDrawer()" class="w-10 h-10 bg-yellow-400 comic-border rounded-xl flex items-center justify-center font-black text-lg comic-shadow cursor-pointer hover:bg-yellow-300 transition-colors" title="個人中心與身分切換">
+          🦸
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== 美漫爆炸風格 Hero 區塊 ==================== -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
+    <div class="halftone-blue comic-border rounded-3xl p-6 sm:p-10 comic-shadow-xl text-white relative overflow-hidden">
+      
+      <!-- 漫畫狀聲詞背景裝飾 -->
+      <div class="absolute right-4 -bottom-6 comic-font text-8xl text-yellow-300 opacity-90 rotate-[-12deg] pointer-events-none select-none drop-shadow-[5px_5px_0px_#000]">
+        BOOM!
+      </div>
+      <div class="absolute right-52 top-1 comic-font text-5xl text-red-500 opacity-90 rotate-[15deg] pointer-events-none select-none drop-shadow-[4px_4px_0px_#000]">
+        POW!
+      </div>
+
+      <div class="relative z-10 max-w-2xl">
+        <div class="inline-block bg-yellow-400 text-black font-black text-xs px-3.5 py-1.5 rounded-lg comic-border mb-3 rotate-[-1deg] comic-shadow">
+          🔥 大學生的超能省錢戰線！拒絕黃牛・同校面交 0 運費
+        </div>
+        <h1 class="text-3xl sm:text-5xl comic-font tracking-wide leading-tight text-yellow-300 mb-3 drop-shadow-[5px_5px_0px_#000]">
+          課本不留白・二手大反擊！<br>
+          <span class="bg-red-600 text-white px-3 py-0.5 rounded-xl comic-border inline-block rotate-1 mt-1 text-2xl sm:text-4xl">
+            以物易物・同校面對面驗收！
+          </span>
+        </h1>
+        <p class="text-white font-black text-xs sm:text-sm mb-6 max-w-lg leading-relaxed drop-shadow-[1px_1px_0px_#000]">
+          杜絕假帳號與詐騙！全體特工學生強制通過教育部 .edu.tw 信箱驗證，相約圖書館、警衛室前明亮處一手交錢一手交貨！
+        </p>
+
+        <!-- 英雄武器分類快速篩選 Tag (F03) -->
+        <div class="flex flex-wrap gap-2 text-xs font-black">
+          <button onclick="filterByTag('book')" class="category-chip bg-yellow-400 text-black px-3.5 py-2 rounded-xl comic-border comic-shadow comic-btn flex items-center gap-1">
+            📚 必修教科書
+          </button>
+          <button onclick="filterByTag('3c')" class="category-chip bg-white text-black px-3.5 py-2 rounded-xl comic-border comic-shadow comic-btn flex items-center gap-1">
+            💻 3C電子神裝
+          </button>
+          <button onclick="filterByTag('dorm')" class="category-chip bg-white text-black px-3.5 py-2 rounded-xl comic-border comic-shadow comic-btn flex items-center gap-1">
+            🏠 宿舍家具電器
+          </button>
+          <button onclick="filterByTag('swap')" class="category-chip bg-red-500 text-yellow-200 px-3.5 py-2 rounded-xl comic-border comic-shadow comic-btn flex items-center gap-1">
+            🔄 英雄以物易物
+          </button>
+          <button onclick="filterByTag('free')" class="category-chip bg-green-400 text-black px-3.5 py-2 rounded-xl comic-border comic-shadow comic-btn flex items-center gap-1">
+            🎁 0元結緣大放送
+          </button>
+          <button onclick="openAiPriceModal()" class="bg-yellow-300 text-red-600 px-3.5 py-2 rounded-xl comic-border comic-shadow comic-btn flex items-center gap-1">
+            ⚡ AI 超能二手估價機
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== AI 個人化推薦橫幅 (AI03) ==================== -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4 w-full">
+    <div class="bg-yellow-300 comic-border rounded-2xl p-4 comic-shadow flex flex-col md:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-black text-yellow-300 comic-border rounded-xl flex items-center justify-center font-black text-xl">
+          🤖
+        </div>
+        <div>
+          <span class="text-xs font-black text-red-600 bg-white px-2 py-0.5 rounded comic-border-sm">AI03 個人化學期推薦</span>
+          <div class="text-sm font-black text-black mt-0.5">
+            偵測到您在關注【資訊工程 / 微積分 / 降噪學習神裝】，同校學長姊精選推薦中！
+          </div>
+        </div>
+      </div>
+      <button onclick="quickFilterAiRecommend()" class="bg-red-600 hover:bg-red-700 text-yellow-300 text-xs font-black px-4 py-2 rounded-xl comic-border comic-btn whitespace-nowrap">
+        查看我的 AI 推薦清單
+      </button>
+    </div>
+  </section>
+
+  <!-- ==================== 進階控制與篩選工具列 (F04, F05, F06, F07, F08) ==================== -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-4 w-full">
+    <div class="bg-white comic-border rounded-2xl p-4 comic-shadow flex flex-col gap-3">
+      
+      <!-- 第一列：交易型態與排序 (F07, F08) -->
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <!-- 交易型態按鈕組 -->
+        <div class="flex flex-wrap items-center gap-2 font-black text-xs">
+          <span class="text-gray-600 uppercase mr-1">戰鬥型態：</span>
+          <button onclick="setTradeType('all')" id="btn-trade-all" class="trade-type-btn px-3.5 py-1.5 rounded-lg comic-border bg-black text-yellow-300">
+            全體出擊
+          </button>
+          <button onclick="setTradeType('buy')" id="btn-trade-buy" class="trade-type-btn px-3.5 py-1.5 rounded-lg comic-border bg-white text-black hover:bg-yellow-100">
+            💰 現金收購
+          </button>
+          <button onclick="setTradeType('swap')" id="btn-trade-swap" class="trade-type-btn px-3.5 py-1.5 rounded-lg comic-border bg-white text-black hover:bg-yellow-100">
+            🔄 以物換物
+          </button>
+          <button onclick="setTradeType('free')" id="btn-trade-free" class="trade-type-btn px-3.5 py-1.5 rounded-lg comic-border bg-white text-black hover:bg-yellow-100">
+            🎁 0元免費結緣
+          </button>
+        </div>
+
+        <!-- 物品統計與排序切換 (F07) -->
+        <div class="flex items-center gap-3 text-xs font-black">
+          <span id="itemCount" class="bg-yellow-400 text-black px-3 py-1 rounded-md comic-border">共 8 項戰利品</span>
+          <select id="sortSelector" onchange="sortItems()" class="bg-white comic-border rounded-lg py-1 px-2.5 focus:outline-none cursor-pointer">
+            <option value="newest">🕒 最新上架優先</option>
+            <option value="price-asc">💵 價格由低至高</option>
+            <option value="price-desc">💰 價格由高至低</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- 第二列：價格範圍與條件細篩 (F05, F20) -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t-2 border-black/10 text-xs font-black">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="text-gray-600">預算範圍 (NT$)：</span>
+          <input type="number" id="minPriceInput" placeholder="最低價" oninput="filterItems()" class="w-20 bg-yellow-50 comic-border-sm rounded-lg px-2 py-1 focus:outline-none focus:bg-white text-xs">
+          <span>~</span>
+          <input type="number" id="maxPriceInput" placeholder="最高價" oninput="filterItems()" class="w-20 bg-yellow-50 comic-border-sm rounded-lg px-2 py-1 focus:outline-none focus:bg-white text-xs">
+          <button onclick="setQuickBudget(500)" class="bg-gray-100 hover:bg-yellow-200 comic-border-sm rounded-lg px-2 py-1 text-[11px]">500元內</button>
+          <button onclick="setQuickBudget(2000)" class="bg-gray-100 hover:bg-yellow-200 comic-border-sm rounded-lg px-2 py-1 text-[11px]">2000元內</button>
+          <button onclick="resetBudget()" class="text-red-600 hover:underline text-[11px]">清空預算</button>
+          <span id="priceRangeError" class="hidden text-red-600 font-black text-[11px] ml-1">⚠️ 最高價不可小於最低價！</span>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <label class="flex items-center gap-1.5 cursor-pointer">
+            <input type="checkbox" id="verifiedOnly" onchange="filterItems()" class="w-4 h-4 accent-red-600">
+            <span>僅顯示 .edu.tw 認證賣家 (F20)</span>
+          </label>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== 漫畫主商品網格 Main Grid (F01) ==================== -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex-1 w-full">
+    <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- 由 JavaScript 渲染 -->
+    </div>
+
+    <!-- 空白狀態 (Empty State - F04) -->
+    <div id="emptyState" class="hidden text-center py-16 bg-white comic-border rounded-2xl comic-shadow my-8">
+      <div class="comic-font text-6xl text-red-600 mb-2">OOPS! NO HERO LOOT!</div>
+      <h3 class="text-xl font-black text-black mb-1">雷達沒有感應到符合條件的戰利品！</h3>
+      <p class="text-xs font-bold text-gray-600 max-w-sm mx-auto mb-4">快放寬搜尋預算或學校，或是立即成為第一個在該校基地刊登的英雄！</p>
+      <button onclick="resetFilters()" class="text-xs font-black bg-yellow-400 hover:bg-yellow-300 text-black px-6 py-2.5 rounded-xl comic-border comic-shadow comic-btn">
+        重設所有雷達條件
+      </button>
+    </div>
+  </main>
+
+  <!-- ==================== 安全面交指引與地圖提醒 ==================== -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 w-full">
+    <div class="halftone-red comic-border rounded-2xl p-5 comic-shadow-lg text-white flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3.5">
+        <div class="w-13 h-13 bg-yellow-400 text-black comic-border rounded-xl flex items-center justify-center text-3xl font-black comic-shadow flex-shrink-0">
+          🛡️
+        </div>
+        <div>
+          <h4 class="comic-font text-2xl text-yellow-300 leading-none mb-1 drop-shadow-[2px_2px_0px_#000]">
+            HERO SAFETY FIRST! 校園安全防衛指引
+          </h4>
+          <p class="text-xs font-black text-white/95">
+            全體特工學生皆經 .edu.tw 信箱驗證！一律約在各校總圖書館一樓或人潮學餐面交，當面驗機點鈔，零假冒零詐騙！
+          </p>
+        </div>
+      </div>
+      <button onclick="openMapModal()" class="text-xs font-black bg-yellow-400 hover:bg-yellow-300 text-black px-5 py-3 rounded-xl comic-border comic-shadow comic-btn whitespace-nowrap">
+        📍 檢視全台校園安全接頭座標
+      </button>
+    </div>
+  </section>
+
+  <!-- ==================== 頁尾 Footer ==================== -->
+  <footer class="bg-white comic-border border-b-0 border-x-0 py-6 text-xs text-gray-700 mt-auto font-black">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <div class="comic-font text-3xl text-red-600 mb-1 drop-shadow-[2px_2px_0px_#000]">
+        UNITRADE COMICS! 全國大學生二手英雄市集
+      </div>
+      <p class="text-[11px] text-gray-500 mb-3">
+        Vibe Coding 進階專題成果・經典美式波普漫畫風 (Style 2 全功能覆蓋驗證版)
+      </p>
+      <div class="flex justify-center gap-4 text-xs font-black">
+        <a href="index.html" class="underline hover:text-red-600">風格總覽入口</a>
+        <span>•</span>
+        <a href="PRD.md" class="underline hover:text-red-600">檢視 PRD.md</a>
+        <span>•</span>
+        <a href="UIUX.md" class="underline hover:text-red-600">檢視 UIUX.md</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== 手機版固定底部導覽列 (F10) ==================== -->
+  <div class="sm:hidden fixed bottom-0 left-0 right-0 bg-white comic-border border-b-0 border-x-0 h-16 z-40 flex items-center justify-around px-2 shadow-lg">
+    <button onclick="window.scrollTo({top:0, behavior:'smooth'})" class="flex flex-col items-center justify-center text-[10px] font-black text-red-600">
+      <span class="text-lg">⚡</span> 市集
+    </button>
+    <button onclick="openAiChatModal()" class="flex flex-col items-center justify-center text-[10px] font-black text-black">
+      <span class="text-lg">🤖</span> AI 顧問
+    </button>
+    <button onclick="openListingModal()" class="w-12 h-12 bg-red-600 text-yellow-300 comic-border rounded-full flex items-center justify-center text-xl font-black -mt-6 comic-shadow">
+      ＋
+    </button>
+    <button onclick="toggleFavoritesDrawer()" class="flex flex-col items-center justify-center text-[10px] font-black text-black">
+      <span class="text-lg">⭐</span> 收藏
+    </button>
+    <button onclick="toggleUserCenterDrawer()" class="flex flex-col items-center justify-center text-[10px] font-black text-black">
+      <span class="text-lg">🦸</span> 我的
+    </button>
+  </div>
+
+  <!-- ==================== 互動彈窗與側邊抽屜群組 ==================== -->
+
+  <!-- 1. 商品詳情 Modal (F02, F15, F16, F19) -->
+  <div id="detailModal" class="fixed inset-0 bg-black/75 z-50 hidden flex items-center justify-center p-3 sm:p-4">
+    <div class="bg-white comic-border rounded-2xl max-w-2xl w-full p-5 sm:p-6 comic-shadow-xl max-h-[92vh] overflow-y-auto relative">
+      <button onclick="closeModal('detailModal')" class="absolute right-4 top-4 w-9 h-9 bg-yellow-300 hover:bg-red-600 hover:text-white comic-border rounded-xl text-base font-black flex items-center justify-center z-10">✕</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- 2. AI 拍照自動上架 Modal (AI01) -->
+  <div id="aiCameraModal" class="fixed inset-0 bg-black/75 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white comic-border rounded-2xl max-w-md w-full p-6 comic-shadow-xl relative">
+      <button onclick="closeModal('aiCameraModal')" class="absolute right-4 top-4 w-8 h-8 bg-yellow-300 hover:bg-red-600 hover:text-white comic-border rounded-lg text-sm font-black flex items-center justify-center">✕</button>
+      
+      <div class="flex items-center gap-3 mb-4">
+        <span class="text-3xl">📸</span>
+        <div>
+          <h3 class="comic-font text-2xl text-red-600 leading-none">AI 拍照自動辨識上架 (AI01)</h3>
+          <p class="text-[11px] font-black text-gray-600">拍攝教科書或 3C，神經網絡光速萃取品名並估值！</p>
+        </div>
+      </div>
+
+      <div class="space-y-3.5 text-xs font-black">
+        <div id="cameraPreviewBox" class="h-44 bg-yellow-100 comic-border rounded-xl flex flex-col items-center justify-center p-4 text-center cursor-pointer hover:bg-yellow-200 transition-colors" onclick="simulateCameraScan()">
+          <span class="text-4xl mb-1">📷</span>
+          <span class="text-sm font-black text-black">點擊模擬拍照上傳教科書或 3C</span>
+          <span class="text-[11px] text-gray-500 mt-1">支援封面 OCR 辨識、版次偵測、瑕疵判斷</span>
+        </div>
+
+        <div id="cameraScanResult" class="hidden bg-yellow-50 comic-border rounded-xl p-3 space-y-2">
+          <div class="flex items-center justify-between text-green-700 font-black">
+            <span>✓ AI 辨識完成 (信心度 98%)</span>
+            <span class="bg-green-200 px-2 py-0.5 rounded comic-border-sm text-[10px]">成功</span>
+          </div>
+          <div class="text-black text-xs font-black">
+            <div>• 物品名稱：【9成新】Stewart Calculus 微積分 原文書 8th Edition</div>
+            <div>• 自動分類：大學教科書 (數學系 / 電機系 / 工學院大一必修)</div>
+            <div>• AI 建議定價：<span class="text-red-600 font-black">NT$ 420 ~ 500</span> (原價 1,400)</div>
+          </div>
+          <button onclick="applyAiScannedItem()" class="w-full bg-red-600 text-yellow-300 py-2 rounded-xl comic-border comic-btn text-xs font-black uppercase">
+            ⚡ 一鍵代入刊登表單
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. AI 二手行情估算機 Modal (AI02) -->
+  <div id="aiPriceModal" class="fixed inset-0 bg-black/75 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white comic-border rounded-2xl max-w-md w-full p-6 comic-shadow-xl relative">
+      <button onclick="closeModal('aiPriceModal')" class="absolute right-4 top-4 w-8 h-8 bg-yellow-300 hover:bg-red-600 hover:text-white comic-border rounded-lg text-sm font-black flex items-center justify-center">✕</button>
+      
+      <div class="flex items-center gap-3 mb-4">
+        <span class="text-3xl">⚡</span>
+        <div>
+          <h3 class="comic-font text-2xl text-red-600 leading-none">AI 超能力二手估價機 (AI02)</h3>
+          <p class="text-[11px] font-black text-gray-600">以全台 40+ 所大學校園二手實戰成交大數據精準預測！</p>
+        </div>
+      </div>
+
+      <div class="space-y-3.5 text-xs font-black">
+        <div>
+          <label class="block mb-1">物品武器名稱 / 必修書目</label>
+          <input type="text" id="aiItemName" value="Stewart Calculus 微積分 原文書 8e" class="w-full bg-yellow-50 comic-border rounded-xl p-2.5 focus:outline-none focus:bg-white">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block mb-1">磨損程度 (物況)</label>
+            <select id="aiCondition" class="w-full bg-yellow-50 comic-border rounded-xl p-2.5 focus:outline-none focus:bg-white">
+              <option value="9">9 成新（少許筆記/微擦痕）</option>
+              <option value="8">8 成新（正常翻閱/螢光筆）</option>
+              <option value="10">全新封膜未拆</option>
+            </select>
+          </div>
+          <div>
+            <label class="block mb-1">入手原價 (NT$)</label>
+            <input type="number" id="aiOriginalPrice" value="1400" class="w-full bg-yellow-50 comic-border rounded-xl p-2.5 focus:outline-none focus:bg-white">
+          </div>
+        </div>
+
+        <button onclick="calcAiPrice()" class="w-full bg-red-600 hover:bg-red-700 text-yellow-300 py-3 rounded-xl comic-border comic-shadow comic-btn text-xs font-black uppercase">
+          💥 立即啟動 AI 英雄估價算力！
+        </button>
+
+        <div id="aiResultBox" class="bg-yellow-200 comic-border rounded-xl p-4 mt-2">
+          <div class="flex justify-between items-center text-xs">
+            <span class="font-black text-black">💥 建議秒殺成交價：</span>
+            <span id="aiEstimatePriceRange" class="comic-font text-2xl text-red-600 leading-none">NT$ 420 ~ 510</span>
+          </div>
+          <p class="text-[11px] font-bold text-gray-800 mt-1">
+            大數據分析：本商品在開學前 2 週需求急遽攀升，同校面交預測 48 小時內成交！
+            <span class="text-red-700 block mt-0.5">*此為演算法歷史估算值，實際成交以雙方約定為準。</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. AI 導購聊天抽屜 Modal (AI04) -->
+  <div id="aiChatModal" class="fixed inset-0 bg-black/75 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white comic-border rounded-2xl max-w-md w-full p-6 comic-shadow-xl relative flex flex-col h-[520px]">
+      <button onclick="closeModal('aiChatModal')" class="absolute right-4 top-4 w-8 h-8 bg-yellow-300 hover:bg-red-600 hover:text-white comic-border rounded-lg text-sm font-black flex items-center justify-center">✕</button>
+
+      <div class="flex items-center gap-2 pb-3 border-b-2 border-black">
+        <div class="w-8 h-8 rounded-lg bg-red-600 text-yellow-300 comic-border flex items-center justify-center font-black">AI</div>
+        <div>
+          <h3 class="comic-font text-xl text-black leading-none">AI 導購先鋒小隊 (AI04)</h3>
+          <p class="text-[10px] text-green-700 font-black">● 智慧語意解析雷達運作中</p>
+        </div>
+      </div>
+
+      <!-- 快速提問標籤 -->
+      <div class="py-2 flex gap-1.5 overflow-x-auto text-[10px] font-black border-b border-black/10">
+        <button onclick="quickAskChat('我想找 3,000 元以內適合上課做筆記的二手平板！')" class="bg-yellow-100 hover:bg-yellow-300 comic-border-sm rounded-md px-2 py-0.5 whitespace-nowrap">
+          找 3000 元內平板
+        </button>
+        <button onclick="quickAskChat('有沒有大一微積分和普通物理課本？')" class="bg-yellow-100 hover:bg-yellow-300 comic-border-sm rounded-md px-2 py-0.5 whitespace-nowrap">
+          找微積分/普物課本
+        </button>
+        <button onclick="quickAskChat('成大勝利校區有哪些東西可以面交？')" class="bg-yellow-100 hover:bg-yellow-300 comic-border-sm rounded-md px-2 py-0.5 whitespace-nowrap">
+          成大面交物品
+        </button>
+      </div>
+
+      <!-- 對話區 -->
+      <div id="chatMessages" class="flex-1 overflow-y-auto py-3 space-y-3 text-xs font-black">
+        <div class="bg-yellow-100 comic-border p-3 rounded-xl text-black max-w-[85%] speech-bubble">
+          報告特工！AI 導購先鋒在此！請直接告訴我你想找的課程書目、預算或可交換的物資！
+        </div>
+      </div>
+
+      <!-- 輸入欄 -->
+      <div class="pt-3 border-t-2 border-black flex gap-2">
+        <input type="text" id="userChatInput" placeholder="輸入指令，例如：找台大面交的二手滑鼠..." class="flex-1 bg-yellow-50 comic-border rounded-xl px-3 py-2 text-xs font-black focus:outline-none">
+        <button onclick="sendChatMessage()" class="bg-red-600 hover:bg-red-700 text-yellow-300 px-4 py-2 rounded-xl comic-border comic-shadow-sm text-xs font-black">
+          發射 💥
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. 快速出擊刊登物品 Modal (F13, F15) -->
+  <div id="listingModal" class="fixed inset-0 bg-black/75 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white comic-border rounded-2xl max-w-lg w-full p-6 comic-shadow-xl relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeModal('listingModal')" class="absolute right-4 top-4 w-8 h-8 bg-yellow-300 hover:bg-red-600 hover:text-white comic-border rounded-lg text-sm font-black flex items-center justify-center">✕</button>
+
+      <div class="flex items-center gap-2.5 mb-4">
+        <span class="text-3xl">💥</span>
+        <div>
+          <h3 class="comic-font text-2xl text-red-600 leading-none">英雄戰備物資刊登 (F13)</h3>
+          <p class="text-[11px] font-black text-gray-600">將你的閒置裝備傳承給下一位同校隊友！</p>
+        </div>
+      </div>
+
+      <form id="listingForm" onsubmit="handleNewListing(event)" class="space-y-3 text-xs font-black">
+        <div>
+          <label class="block mb-1">裝備名稱 / 課本書名 *</label>
+          <input type="text" id="newTitle" required placeholder="如：【9成新】經濟學原理 原文書 第9版" class="w-full bg-yellow-50 comic-border rounded-xl p-2.5 focus:outline-none focus:bg-white">
+        </div>
+
+        <!-- 多圖上傳與檔案大小驗證 (F13 規格要求) -->
+        <div>
+          <label class="block mb-1">商品實體照片上傳 (最多 5 張，單檔限制 < 5MB) *</label>
+          <input type="file" id="newImagesInput" multiple accept="image/*" onchange="validateUploadedImages(this)" class="w-full bg-yellow-50 comic-border rounded-xl p-2 text-xs">
+          <div id="uploadFileError" class="hidden text-red-600 text-[10px] mt-1">⚠️ 檔案過大或超過5張圖片限制！</div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block mb-1">分類類別 *</label>
+            <select id="newCategory" class="w-full bg-yellow-50 comic-border rounded-xl p-2.5 focus:outline-none focus:bg-white">
+              <option value="book">必修教科書</option>
+              <option value="3c">3C電子神裝</option>
+              <option value="dorm">宿舍家具與電器</option>
+              <option value="other">生活良品</option>
+            </select>
+          </div>
+          <div>
+            <label class="block mb-1">所屬基地 (學校) *</label>
+            <select id="newSchool" class="w-full bg-yellow-50 comic-border rounded-xl p-2.5 focus:outline-none focus:bg-white">
+              <option value="ntu">國立臺灣大學基地</option>
+              <option value="nycu">國立陽明交通基地</option>
+              <option value="nthu">國立清華大學基地</option>
+              <option value="ncku">國立成功大學基地</option>
+              <option value="nccu">國立政治大學基地</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block mb-1">作戰型態 *</label>
+            <select id="newTradeType" class="w-full bg-yellow-50 comic-border rounded-xl p-2.5 focus:outline-none focus:bg-white">
+              <option value="buy">💰 現金買賣</option>
+              <option value="swap">🔄 以物易物 (可換物)</option>
+              <option value="free">🎁 0元免費結緣</option>
+            </select>
+          </div>
+          <div>
+            <label class="block mb-1">標價 (NT$) *</label>
+            <input type="number" id="newPrice" min="0" value="500" class="w-full bg-yellow-50 comic-border rounded-xl p-2.5 focus:outline-none focus:bg-white">
+          </div>
+        </div>
+
+        <div>
+          <label class="block mb-1">以物易物期待 / 安全面交地標 * (F15)</label>
+          <input type="text" id="newNote" required placeholder="例如：約總圖書館一樓自取，亦可換微積分課本（可接受補差價）" class="w-full bg-yellow-50 comic-border rounded-xl p-2.5 focus:outline-none focus:bg-white">
+        </div>
+
+        <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-yellow-300 py-3 rounded-xl comic-border comic-shadow comic-btn text-xs font-black uppercase mt-2">
+          🚀 轟炸發佈至校園英雄市集！
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 6. 校園安全面交雷達地圖 Modal -->
+  <div id="mapModal" class="fixed inset-0 bg-black/75 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white comic-border rounded-2xl max-w-lg w-full p-6 comic-shadow-xl relative">
+      <button onclick="closeModal('mapModal')" class="absolute right-4 top-4 w-8 h-8 bg-yellow-300 hover:bg-red-600 hover:text-white comic-border rounded-lg text-sm font-black flex items-center justify-center">✕</button>
+      
+      <div class="flex items-center gap-2 mb-3">
+        <span class="text-2xl">📍</span>
+        <h3 class="comic-font text-2xl text-red-600 leading-none">全台校園安全接頭座標</h3>
+      </div>
+      <div class="space-y-2.5 text-xs font-black">
+        <div class="p-3 bg-yellow-100 comic-border rounded-xl">
+          <div class="text-blue-800 font-black mb-0.5">🏛️ 國立臺灣大學基地</div>
+          <div>首選坐標：總圖書館一樓大廳、小福廣場 (監控防衛率 100%)</div>
+        </div>
+        <div class="p-3 bg-yellow-100 comic-border rounded-xl">
+          <div class="text-blue-800 font-black mb-0.5">🏛️ 國立陽明交通基地</div>
+          <div>首選坐標：浩然圖書館一樓、第二餐廳 7-11 前</div>
+        </div>
+        <div class="p-3 bg-yellow-100 comic-border rounded-xl">
+          <div class="text-blue-800 font-black mb-0.5">🏛️ 國立成功大學基地</div>
+          <div>首選坐標：勝利校區成大會館門口、總圖自習室前</div>
+        </div>
+        <div class="p-3 bg-yellow-100 comic-border rounded-xl">
+          <div class="text-blue-800 font-black mb-0.5">🏛️ 國立政治大學基地</div>
+          <div>首選坐標：商學院一樓中庭、中正圖書館門口</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. 收藏清單側邊抽屜 Drawer (F09) -->
+  <div id="favoritesDrawer" class="fixed inset-y-0 right-0 w-full sm:w-96 bg-white comic-border border-y-0 border-r-0 z-50 transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl">
+    <div class="p-4 bg-yellow-400 comic-border border-t-0 border-x-0 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-xl">⭐</span>
+        <h3 class="comic-font text-xl text-black">我的願望收藏清單 (F09)</h3>
+      </div>
+      <button onclick="toggleFavoritesDrawer()" class="w-8 h-8 bg-white comic-border rounded-lg text-sm font-black flex items-center justify-center">✕</button>
+    </div>
+
+    <div id="favoritesList" class="flex-1 overflow-y-auto p-4 space-y-3">
+      <!-- 動態載入收藏項目 -->
+    </div>
+
+    <div class="p-4 bg-yellow-50 comic-border border-b-0 border-x-0">
+      <button onclick="clearAllFavorites()" class="w-full bg-white hover:bg-red-100 text-red-600 comic-border py-2 rounded-xl text-xs font-black">
+        清空全部收藏
+      </button>
+    </div>
+  </div>
+
+  <!-- 8. 個人中心與刊登管理抽屜 User Drawer (F11, F12, F14, F17, F18) -->
+  <div id="userCenterDrawer" class="fixed inset-y-0 right-0 w-full sm:w-96 bg-white comic-border border-y-0 border-r-0 z-50 transform translate-x-full transition-transform duration-300 flex flex-col shadow-2xl">
+    <div class="p-4 bg-red-600 text-yellow-300 comic-border border-t-0 border-x-0 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-xl">🦸</span>
+        <h3 class="comic-font text-xl">特工英雄個人基地 (F12)</h3>
+      </div>
+      <button onclick="toggleUserCenterDrawer()" class="w-8 h-8 bg-yellow-300 text-black comic-border rounded-lg text-sm font-black flex items-center justify-center">✕</button>
+    </div>
+
+    <div class="p-4 flex-1 overflow-y-auto space-y-4 text-xs font-black">
+      <!-- 學生身分小卡 (F12, F20) -->
+      <div class="bg-yellow-100 comic-border rounded-xl p-3.5 flex items-center gap-3">
+        <div class="w-12 h-12 bg-yellow-400 comic-border rounded-full flex items-center justify-center text-2xl">
+          🦸
+        </div>
+        <div class="flex-1">
+          <div class="text-sm font-black text-black flex items-center justify-between">
+            <span id="userNameLabel">王大維同學</span>
+            <span id="userEduBadge" class="bg-green-600 text-white text-[9px] px-1.5 py-0.2 rounded comic-border-sm">.edu.tw 認證</span>
+          </div>
+          <div id="userSchoolLabel" class="text-gray-600 text-[11px]">國立臺灣大學・資訊工程系</div>
+          <div class="text-yellow-700 text-[11px] mt-0.5">信譽評等：★★★★★ (5.0 / 12次成交)</div>
+        </div>
+      </div>
+
+      <!-- 登入/註冊/切換身分動作 (F11) -->
+      <div class="flex gap-2">
+        <button onclick="openAuthModal('login')" class="flex-1 bg-yellow-300 hover:bg-yellow-400 comic-border-sm py-1.5 rounded-lg text-xs font-black">
+          切換/登入帳號
+        </button>
+        <button onclick="logoutCurrentUser()" class="bg-gray-100 hover:bg-red-100 text-red-600 comic-border-sm px-3 py-1.5 rounded-lg text-xs font-black">
+          登出
+        </button>
+      </div>
+
+      <!-- 刊登狀態追蹤管理 (F14) -->
+      <div>
+        <h4 class="font-black text-black mb-2 flex items-center gap-1">
+          <span>📦</span> 我刊登的二手戰備 (狀態追蹤 F14)
+        </h4>
+        <div id="myItemsList" class="space-y-2">
+          <!-- JS 動態填入 -->
+        </div>
+      </div>
+
+      <!-- 歷史交易紀錄 (F17) -->
+      <div>
+        <h4 class="font-black text-black mb-2 flex items-center gap-1">
+          <span>📜</span> 歷史交易紀錄 (F17)
+        </h4>
+        <div class="space-y-1.5 text-[11px]">
+          <div class="p-2 bg-gray-50 comic-border-sm rounded-lg flex justify-between">
+            <div>購買：微積分 Stewart 8e (台大)</div>
+            <span class="text-green-700 font-black">已結案 ★★★★★</span>
+          </div>
+          <div class="p-2 bg-gray-50 comic-border-sm rounded-lg flex justify-between">
+            <div>贈送：大一普化實驗衣 (清大)</div>
+            <span class="text-green-700 font-black">結緣完成</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 站內通知中心 (F18) -->
+      <div>
+        <div class="flex justify-between items-center mb-2">
+          <h4 class="font-black text-black flex items-center gap-1">
+            <span>🔔</span> 戰情通知中心 (F18)
+          </h4>
+          <button onclick="markAllNotificationsRead()" class="text-[10px] text-blue-600 hover:underline">全部標為已讀</button>
+        </div>
+        <div id="notificationList" class="space-y-1.5 text-[11px]">
+          <div class="p-2.5 bg-blue-50 comic-border-sm rounded-lg flex items-start gap-2 notification-item unread">
+            <span>💬</span>
+            <div class="flex-1">
+              <div class="text-black font-black flex justify-between">
+                <span>陳同學在【微積分 8e】留下新問答</span>
+                <span class="text-[9px] bg-red-500 text-white px-1 rounded">未讀</span>
+              </div>
+              <div class="text-gray-500 text-[10px]">10 分鐘前：「請問明天中午可以在總圖面交嗎？」</div>
+            </div>
+          </div>
+          <div class="p-2.5 bg-yellow-50 comic-border-sm rounded-lg flex items-start gap-2 notification-item unread">
+            <span>📉</span>
+            <div class="flex-1">
+              <div class="text-black font-black flex justify-between">
+                <span>收藏的【Sony 降噪耳機】降價通知</span>
+                <span class="text-[9px] bg-red-500 text-white px-1 rounded">未讀</span>
+              </div>
+              <div class="text-gray-500 text-[10px]">昨日：賣家降價 NT$ 300，現正 NT$ 3,800！</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. 會員註冊與登入 Modal (F11, F20) -->
+  <div id="authModal" class="fixed inset-0 bg-black/75 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white comic-border rounded-2xl max-w-sm w-full p-6 comic-shadow-xl relative">
+      <button onclick="closeModal('authModal')" class="absolute right-4 top-4 w-8 h-8 bg-yellow-300 hover:bg-red-600 hover:text-white comic-border rounded-lg text-sm font-black flex items-center justify-center">✕</button>
+      
+      <div class="text-center mb-4">
+        <div class="text-3xl mb-1">🦸</div>
+        <h3 id="authModalTitle" class="comic-font text-2xl text-red-600 leading-none">特工英雄登入 / 註冊 (F11)</h3>
+        <p class="text-[11px] font-black text-gray-600 mt-1">使用大專院校 .edu.tw 電子郵箱認證身分 (F20)</p>
+      </div>
+
+      <form onsubmit="handleAuthSubmit(event)" class="space-y-3 text-xs font-black">
+        <div>
+          <label class="block mb-1">學校電子郵件 (.edu.tw) *</label>
+          <input type="email" id="authEmailInput" required placeholder="如：b11902000@ntu.edu.tw" class="w-full bg-yellow-50 comic-border rounded-xl p-2.5 focus:outline-none focus:bg-white">
+          <div id="authEmailError" class="hidden text-red-600 text-[10px] mt-1 font-black">⚠️ 必須為有效的大專院校 .edu.tw 學生信箱！</div>
+        </div>
+
+        <div>
+          <label class="block mb-1">密碼 *</label>
+          <input type="password" id="authPasswordInput" required minlength="6" placeholder="請輸入 6 碼以上密碼" class="w-full bg-yellow-50 comic-border rounded-xl p-2.5 focus:outline-none focus:bg-white">
+        </div>
+
+        <div>
+          <label class="block mb-1">姓名 / 暱稱 (註冊時填寫)</label>
+          <input type="text" id="authNameInput" placeholder="例如：李小龍" class="w-full bg-yellow-50 comic-border rounded-xl p-2.5 focus:outline-none focus:bg-white">
+        </div>
+
+        <div class="flex justify-between items-center text-[11px] pt-1">
+          <button type="button" onclick="handlePasswordReset()" class="text-blue-700 hover:underline">忘記密碼？重設密碼</button>
+        </div>
+
+        <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-yellow-300 py-3 rounded-xl comic-border comic-shadow comic-btn text-xs font-black uppercase mt-2">
+          確認登入 / 完成身分驗證
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 10. 管理員審查與爭議仲裁後台 Modal (F19) -->
+  <div id="adminModal" class="fixed inset-0 bg-black/75 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white comic-border rounded-2xl max-w-xl w-full p-6 comic-shadow-xl relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeModal('adminModal')" class="absolute right-4 top-4 w-8 h-8 bg-yellow-300 hover:bg-red-600 hover:text-white comic-border rounded-lg text-sm font-black flex items-center justify-center">✕</button>
+
+      <div class="flex items-center gap-2.5 mb-4 border-b-2 border-black pb-3">
+        <span class="text-3xl">🛡️</span>
+        <div>
+          <h3 class="comic-font text-2xl text-black leading-none">校園二手特工後台管理系統 (F19)</h3>
+          <p class="text-[11px] font-black text-gray-500">審查違規檢舉、假冒學生、不實定價與爭議案件</p>
+        </div>
+      </div>
+
+      <div class="space-y-4 text-xs font-black">
+        <!-- 待審查檢舉案件 -->
+        <div>
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-sm font-black text-red-600">⚠️ 待審查檢舉清單</span>
+            <span id="adminReportCount" class="bg-red-100 text-red-800 px-2 py-0.5 rounded comic-border-sm text-[10px]">2 件待處理</span>
+          </div>
+          <div id="adminReportList" class="space-y-2">
+            <div class="bg-red-50 comic-border-sm rounded-xl p-3 flex justify-between items-center">
+              <div>
+                <div class="text-black font-black">【檢舉案件 #01】懷疑販售盜版課本影印本</div>
+                <div class="text-gray-600 text-[11px]">被檢舉物品：微積分重點筆記影本 (政大)・檢舉人：林同學</div>
+                <div class="text-red-700 text-[10px]">原因：未經授權影印整本教科書</div>
+              </div>
+              <div class="flex gap-1.5">
+                <button onclick="resolveReport(this, '下架處分')" class="bg-red-600 text-white px-2.5 py-1 rounded comic-border-sm text-[11px] hover:bg-red-700">確認下架</button>
+                <button onclick="resolveReport(this, '駁回無違規')" class="bg-gray-200 text-black px-2.5 py-1 rounded comic-border-sm text-[11px] hover:bg-gray-300">駁回</button>
+              </div>
+            </div>
+            <div class="bg-yellow-50 comic-border-sm rounded-xl p-3 flex justify-between items-center">
+              <div>
+                <div class="text-black font-black">【檢舉案件 #02】面交無故爽約放鳥</div>
+                <div class="text-gray-600 text-[11px]">被檢舉帳號：匿名買家・提出人：張同學 (成大)</div>
+              </div>
+              <div class="flex gap-1.5">
+                <button onclick="resolveReport(this, '扣減信用星等')" class="bg-yellow-400 text-black px-2.5 py-1 rounded comic-border-sm text-[11px]">處分扣星</button>
+                <button onclick="resolveReport(this, '和解結案')" class="bg-gray-200 text-black px-2.5 py-1 rounded comic-border-sm text-[11px]">和解結案</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 歷史爭議處理紀錄 -->
+        <div>
+          <span class="text-sm font-black text-black block mb-2">📜 歷史爭議仲裁紀錄 (F19)</span>
+          <div class="bg-gray-50 comic-border-sm rounded-xl p-3 space-y-1.5 text-[11px] text-gray-700">
+            <div>• [已結案] 台大圖書館耳機刮痕爭議：雙方同意折讓 NT$ 200 完成交易。</div>
+            <div>• [已下架] 惡意刊登違規電子菸草商品：系統管理員已永久封禁帳號。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11. 檢舉商品 Modal (F19) -->
+  <div id="reportItemModal" class="fixed inset-0 bg-black/75 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white comic-border rounded-2xl max-w-sm w-full p-6 comic-shadow-xl relative">
+      <button onclick="closeModal('reportItemModal')" class="absolute right-4 top-4 w-8 h-8 bg-yellow-300 hover:bg-red-600 hover:text-white comic-border rounded-lg text-sm font-black flex items-center justify-center">✕</button>
+      
+      <div class="text-center mb-3">
+        <span class="text-3xl">⚠️</span>
+        <h3 class="comic-font text-2xl text-red-600 leading-none">檢舉違規商品 (F19)</h3>
+        <p class="text-[11px] font-black text-gray-600 mt-1">共同維護校園純淨誠信的二手市集</p>
+      </div>
+
+      <form onsubmit="handleReportSubmit(event)" class="space-y-3 text-xs font-black">
+        <input type="hidden" id="reportTargetItemId">
+        <div>
+          <label class="block mb-1">檢舉違規理由 *</label>
+          <select id="reportReasonSelect" class="w-full bg-yellow-50 comic-border rounded-xl p-2.5">
+            <option>疑似詐騙或黃牛哄抬價格</option>
+            <option>商品敘述不實 / 圖片不符</option>
+            <option>非本校學生或冒用 .edu.tw</option>
+            <option>違禁品或盜版侵權教科書</option>
+          </select>
+        </div>
+        <div>
+          <label class="block mb-1">詳細說明 (選填)</label>
+          <textarea id="reportDetailText" rows="2" placeholder="請補充具體情形..." class="w-full bg-yellow-50 comic-border rounded-xl p-2 text-xs"></textarea>
+        </div>
+        <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-yellow-300 py-2.5 rounded-xl comic-border comic-btn text-xs font-black uppercase">
+          送交管理員審查
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== JavaScript 資料邏輯 ==================== -->
+  <script>
+    // 預設全規格真實模擬商品資料庫
+    let mockProducts = [
+      {
+        id: 1,
+        title: "【9成新】Stewart Calculus 微積分 原文書 8th Edition",
+        category: "book",
+        schoolId: "ntu",
+        schoolName: "國立臺灣大學",
+        price: 450,
+        originalPrice: 1400,
+        tradeType: "buy",
+        tradeLabel: "POW! 破盤買賣",
+        condition: "9成新 (微鉛筆標記)",
+        location: "總圖書館一樓正門",
+        seller: "電機二・陳同學",
+        sellerEmail: "chen.ee11@ntu.edu.tw",
+        verified: true,
+        status: "上架中", // 上架中, 已預訂, 交易完成, 已下架
+        image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&auto=format&fit=crop&q=80",
+        description: "大一必修微積分課本，內頁乾淨完整，隨書附期中期末手寫考題攻略！同校面交可再折 50 元。"
+      },
+      {
+        id: 2,
+        title: "【以物易物】iPad Air 4 64G 太空灰 (附手寫筆)",
+        category: "3c",
+        schoolId: "nycu",
+        schoolName: "國立陽明交通",
+        price: 0,
+        originalPrice: 18900,
+        tradeType: "swap",
+        tradeLabel: "🔄 物品交換",
+        condition: "85成新 (功能完好)",
+        location: "二餐全家便利商店前",
+        seller: "資工三・林同學",
+        sellerEmail: "lin.cs10@nycu.edu.tw",
+        verified: true,
+        status: "上架中",
+        image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=600&auto=format&fit=crop&q=80",
+        description: "想交換 Switch OLED 主機或 27 吋 4K 外接螢幕！可視物況補差額，歡迎私訊洽談。"
+      },
+      {
+        id: 3,
+        title: "【免費贈送 0元】大一普通物理/普化實驗衣 + 護目鏡",
+        category: "dorm",
+        schoolId: "nthu",
+        schoolName: "國立清華大學",
+        price: 0,
+        originalPrice: 650,
+        tradeType: "free",
+        tradeLabel: "🎁 0元結緣",
+        condition: "良好 (穿一學期)",
+        location: "綜二館一樓自取",
+        seller: "化學四・黃學姐",
+        sellerEmail: "huang.chem09@nthu.edu.tw",
+        verified: true,
+        status: "上架中",
+        image: "https://images.unsplash.com/photo-1576086213369-97a306d36557?w=600&auto=format&fit=crop&q=80",
+        description: "畢業離校贈予學弟妹，SIZE 為 L 號，洗淨無污，清大學生優先自取。"
+      },
+      {
+        id: 4,
+        title: "【85成新】Sony WH-1000XM4 主動降噪無線耳機",
+        category: "3c",
+        schoolId: "ncku",
+        schoolName: "國立成功大學",
+        price: 3800,
+        originalPrice: 8900,
+        tradeType: "buy",
+        tradeLabel: "💥 降價出擊",
+        condition: "85成新 (耳罩剛換新)",
+        location: "勝利校區成大會館前",
+        seller: "建築四・張同學",
+        sellerEmail: "chang.arch09@ncku.edu.tw",
+        verified: true,
+        status: "上架中",
+        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop&q=80",
+        description: "自習室讀書抗噪神物，功能完整，附原裝配件，AI 市場合理估價約 3700~4200 元。"
+      },
+      {
+        id: 5,
+        title: "【95成新】宿舍節能雙門小冰箱 (含獨立冷凍層)",
+        category: "dorm",
+        schoolId: "nccu",
+        schoolName: "國立政治大學",
+        price: 1600,
+        originalPrice: 4800,
+        tradeType: "buy",
+        tradeLabel: "POW! 破盤買賣",
+        condition: "95成新 (低運轉噪音)",
+        location: "自強九舍門口",
+        seller: "地政三・郭同學",
+        sellerEmail: "kuo.land10@nccu.edu.tw",
+        verified: true,
+        status: "上架中",
+        image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?w=600&auto=format&fit=crop&q=80",
+        description: "宿舍租約滿退宿出清，製冷速度快，需自備推車或小客車自取。"
+      },
+      {
+        id: 6,
+        title: "【全新未拆】羅技 MX Master 3S 人體工學無線滑鼠",
+        category: "3c",
+        schoolId: "ntu",
+        schoolName: "國立臺灣大學",
+        price: 2200,
+        originalPrice: 3290,
+        tradeType: "buy",
+        tradeLabel: "💰 現金/可議",
+        condition: "全新品未開封",
+        location: "小福廣場或公館站",
+        seller: "財金二・劉同學",
+        sellerEmail: "liu.fin11@ntu.edu.tw",
+        verified: true,
+        status: "上架中",
+        image: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=600&auto=format&fit=crop&q=80",
+        description: "靜音鍵軸點擊無擾，台大校內面交可議價，亦可換未拆封之機械鍵盤。"
+      },
+      {
+        id: 7,
+        title: "【8成新】IKEA 經典高背人體工學升降辦公椅",
+        category: "dorm",
+        schoolId: "nycu",
+        schoolName: "國立陽明交通",
+        price: 600,
+        originalPrice: 2290,
+        tradeType: "buy",
+        tradeLabel: "POW! 破盤買賣",
+        condition: "8成新 (氣壓桿正常)",
+        location: "交大研三舍管理室",
+        seller: "生科碩一・許同學",
+        sellerEmail: "hsu.bio08@nycu.edu.tw",
+        verified: true,
+        status: "上架中",
+        image: "https://images.unsplash.com/photo-1580481077195-c3a82145d875?w=600&auto=format&fit=crop&q=80",
+        description: "久坐敲程式不易腰酸，更換新電競椅低價讓出，交大校內自取優先。"
+      },
+      {
+        id: 8,
+        title: "【9成新】Mankiw 經濟學原理 Principles of Economics 9e",
+        category: "book",
+        schoolId: "nccu",
+        schoolName: "國立政治大學",
+        price: 500,
+        originalPrice: 1350,
+        tradeType: "buy",
+        tradeLabel: "POW! 破盤買賣",
+        condition: "9成新 (重點章節螢光筆)",
+        location: "商學院一樓中庭",
+        seller: "經濟二・徐同學",
+        sellerEmail: "hsu.econ11@nccu.edu.tw",
+        verified: true,
+        status: "上架中",
+        image: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&auto=format&fit=crop&q=80",
+        description: "商管大一必修權威教科書，隨書贈送期中整理重點講義一份。"
+      }
+    ];
+
+    // 目前全域狀態
+    let currentTradeType = 'all';
+    let currentTag = 'all';
+    let favoriteIds = JSON.parse(localStorage.getItem('unitrade_favs') || '[]');
+    let currentUser = {
+      name: '王大維同學',
+      email: 'b11902000@ntu.edu.tw',
+      school: '國立臺灣大學',
+      department: '資訊工程學系二年級',
+      verified: true
+    };
+
+    // 渲染商品卡片列表 (F01)
+    function renderProducts(items) {
+      const grid = document.getElementById('productGrid');
+      const emptyState = document.getElementById('emptyState');
+      const countLabel = document.getElementById('itemCount');
+
+      countLabel.textContent = `共 ${items.length} 項戰利品`;
+
+      if (items.length === 0) {
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      grid.innerHTML = items.map(item => {
+        const isFav = favoriteIds.includes(item.id);
+        return `
+          <div class="product-card bg-white comic-border rounded-2xl overflow-hidden comic-shadow flex flex-col justify-between group hover:-translate-y-1 transition-transform" data-id="${item.id}" data-category="${item.category}" data-school="${item.schoolId}">
+            <div class="relative h-46 bg-yellow-100 overflow-hidden comic-border border-t-0 border-x-0 border-b-[3px]">
+              <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-106 transition-transform duration-300">
+              
+              <!-- 交易標籤 (F08) -->
+              <div class="absolute top-2 left-2">
+                <span class="bg-red-600 text-yellow-300 text-[10px] font-black px-2.5 py-0.5 rounded comic-border-sm rotate-[-2deg] inline-block shadow-xs">
+                  ${item.tradeLabel}
+                </span>
+              </div>
+
+              <!-- 收藏愛心按鈕 (F09) -->
+              <button onclick="toggleFavorite(event, ${item.id})" class="btn-fav absolute top-2 right-2 w-8 h-8 rounded-lg ${isFav ? 'bg-red-600 text-yellow-300' : 'bg-yellow-300 text-black'} text-xs flex items-center justify-center comic-border-sm shadow-xs hover:scale-110 transition-transform">
+                ${isFav ? '🌟' : '⭐'}
+              </button>
+
+              <!-- 基地學校標籤 (F06) -->
+              <div class="absolute bottom-2 left-2 text-[10px] px-2 py-0.5 rounded bg-black text-yellow-300 font-black comic-border-sm border-white">
+                🏛️ ${item.schoolName}
+              </div>
+            </div>
+
+            <div class="p-4 flex-1 flex flex-col justify-between font-black">
+              <div>
+                <div class="text-[10px] text-gray-600 mb-1 flex items-center justify-between">
+                  <span class="text-green-700 font-black">✓ .edu.tw 認證特工 (F20)</span>
+                  <span class="text-gray-500">${item.condition}</span>
+                </div>
+                <h3 class="product-title text-xs text-black line-clamp-2 leading-relaxed group-hover:text-red-600 transition-colors mb-2">
+                  ${item.title}
+                </h3>
+              </div>
+
+              <div class="pt-2 border-t-2 border-black mt-2">
+                <div class="flex items-baseline justify-between mb-2.5">
+                  <div>
+                    ${item.price > 0 
+                      ? `<span class="comic-font text-2xl text-red-600 leading-none">NT$ ${item.price}</span>
+                         <span class="text-[10px] text-gray-400 line-through ml-1">NT$ ${item.originalPrice}</span>`
+                      : item.tradeType === 'swap'
+                        ? `<span class="text-xs font-black text-blue-800 bg-blue-100 px-2 py-0.5 rounded comic-border-sm">以物等價交換</span>`
+                        : `<span class="text-sm font-black text-green-700">免費結緣 $0</span>`
+                    }
+                  </div>
+                  <span class="text-[10px] text-gray-500">📍 ${item.location.slice(0, 5)}...</span>
+                </div>
+
+                <div class="grid grid-cols-5 gap-1.5">
+                  <button onclick="showProductDetail(${item.id})" class="col-span-4 bg-yellow-300 hover:bg-yellow-400 text-black comic-border text-xs py-2 rounded-xl comic-shadow-sm comic-btn uppercase font-black">
+                    💥 檢視情報與出價
+                  </button>
+                  <button onclick="openReportModal(${item.id})" class="col-span-1 bg-gray-100 hover:bg-red-200 text-black comic-border rounded-xl text-xs flex items-center justify-center font-black" title="檢舉違規 (F19)">
+                    ⚠️
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      updateFavBadge();
+      renderMyItemsInDrawer();
+    }
+
+    // 篩選與搜尋整合邏輯 (F03, F04, F05, F06, F08, F20)
+    function filterItems() {
+      const school = document.getElementById('schoolSelector').value;
+      const search = document.getElementById('searchInput').value.toLowerCase().trim();
+      const minPrice = parseFloat(document.getElementById('minPriceInput').value) || 0;
+      const maxPrice = parseFloat(document.getElementById('maxPriceInput').value);
+      const verifiedOnly = document.getElementById('verifiedOnly').checked;
+
+      // 邊界檢查：最高價不可小於最低價 (F05)
+      const priceError = document.getElementById('priceRangeError');
+      if (!isNaN(maxPrice) && maxPrice < minPrice) {
+        priceError.classList.remove('hidden');
+        return;
+      } else {
+        priceError.classList.add('hidden');
+      }
+
+      const effectiveMaxPrice = isNaN(maxPrice) ? Infinity : maxPrice;
+
+      let filtered = mockProducts.filter(item => {
+        // 下架的商品不對外顯示 (F14)
+        if (item.status === '已下架') return false;
+
+        const matchSchool = school === 'all' || item.schoolId === school;
+        const matchSearch = item.title.toLowerCase().includes(search) || 
+                            item.description.toLowerCase().includes(search) ||
+                            item.schoolName.toLowerCase().includes(search);
+        const matchTrade = currentTradeType === 'all' || item.tradeType === currentTradeType;
+        const matchTag = currentTag === 'all' || 
+                         (currentTag === 'book' && item.category === 'book') ||
+                         (currentTag === '3c' && item.category === '3c') ||
+                         (currentTag === 'dorm' && item.category === 'dorm') ||
+                         (currentTag === 'swap' && item.tradeType === 'swap') ||
+                         (currentTag === 'free' && item.tradeType === 'free');
+        const matchBudget = item.price >= minPrice && item.price <= effectiveMaxPrice;
+        const matchVerified = !verifiedOnly || item.verified;
+
+        return matchSchool && matchSearch && matchTrade && matchTag && matchBudget && matchVerified;
+      });
+
+      renderProducts(filtered);
+    }
+
+    function setTradeType(type) {
+      currentTradeType = type;
+      document.querySelectorAll('.trade-type-btn').forEach(btn => {
+        btn.classList.remove('bg-black', 'text-yellow-300');
+        btn.classList.add('bg-white', 'text-black');
+      });
+      const activeBtn = document.getElementById(`btn-trade-${type}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-white', 'text-black');
+        activeBtn.classList.add('bg-black', 'text-yellow-300');
+      }
+      filterItems();
+    }
+
+    function filterByTag(tag) {
+      currentTag = currentTag === tag ? 'all' : tag;
+      filterItems();
+    }
+
+    function quickFilterAiRecommend() {
+      // AI 個人化推薦邏輯 (AI03)
+      document.getElementById('searchInput').value = '微積分';
+      filterItems();
+      alert('🤖 AI 個人化推薦：已根據您在關注的【大一必修教材】為您過濾！');
+    }
+
+    function sortItems() {
+      const sortType = document.getElementById('sortSelector').value;
+      if (sortType === 'price-asc') {
+        mockProducts.sort((a, b) => a.price - b.price);
+      } else if (sortType === 'price-desc') {
+        mockProducts.sort((a, b) => b.price - a.price);
+      } else {
+        mockProducts.sort((a, b) => b.id - a.id);
+      }
+      filterItems();
+    }
+
+    function setQuickBudget(max) {
+      document.getElementById('minPriceInput').value = 0;
+      document.getElementById('maxPriceInput').value = max;
+      filterItems();
+    }
+
+    function resetBudget() {
+      document.getElementById('minPriceInput').value = '';
+      document.getElementById('maxPriceInput').value = '';
+      filterItems();
+    }
+
+    // 收藏功能 (F09 - 支援 localStorage)
+    function toggleFavorite(event, id) {
+      if (event) event.stopPropagation();
+      const index = favoriteIds.indexOf(id);
+      if (index === -1) {
+        favoriteIds.push(id);
+      } else {
+        favoriteIds.splice(index, 1);
+      }
+      localStorage.setItem('unitrade_favs', JSON.stringify(favoriteIds));
+      filterItems();
+      renderFavoritesDrawer();
+    }
+
+    function updateFavBadge() {
+      const badge = document.getElementById('favBadge');
+      if (favoriteIds.length > 0) {
+        badge.textContent = favoriteIds.length;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+    }
+
+    function toggleFavoritesDrawer() {
+      const drawer = document.getElementById('favoritesDrawer');
+      drawer.classList.toggle('translate-x-full');
+      renderFavoritesDrawer();
+    }
+
+    function renderFavoritesDrawer() {
+      const list = document.getElementById('favoritesList');
+      const favItems = mockProducts.filter(p => favoriteIds.includes(p.id));
+
+      if (favItems.length === 0) {
+        list.innerHTML = `
+          <div class="text-center py-12 text-gray-500 font-black">
+            <div class="text-4xl mb-2">⭐</div>
+            <div>目前還沒有收藏任何戰利品喔！</div>
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = favItems.map(item => `
+        <div class="bg-yellow-50 comic-border rounded-xl p-3 flex gap-3 items-center justify-between">
+          <img src="${item.image}" class="w-14 h-14 object-cover comic-border rounded-lg">
+          <div class="flex-1 text-xs font-black">
+            <div class="line-clamp-1">${item.title}</div>
+            <div class="text-red-600">${item.price > 0 ? `NT$ ${item.price}` : '以物易物 / 0元'}</div>
+            <div class="text-[10px] text-gray-500">${item.schoolName}</div>
+          </div>
+          <button onclick="toggleFavorite(null, ${item.id})" class="text-red-600 hover:text-black font-black text-sm">✕</button>
+        </div>
+      `).join('');
+    }
+
+    function clearAllFavorites() {
+      favoriteIds = [];
+      localStorage.setItem('unitrade_favs', '[]');
+      filterItems();
+      renderFavoritesDrawer();
+    }
+
+    // 個人中心與刊登管理 (F12, F14, F18)
+    function toggleUserCenterDrawer() {
+      const drawer = document.getElementById('userCenterDrawer');
+      drawer.classList.toggle('translate-x-full');
+      renderMyItemsInDrawer();
+    }
+
+    function renderMyItemsInDrawer() {
+      const container = document.getElementById('myItemsList');
+      if (!container) return;
+      // 假設目前登入者陳同學擁有 id 1
+      const myItems = mockProducts.slice(0, 3);
+      container.innerHTML = myItems.map(item => `
+        <div class="bg-gray-50 comic-border-sm rounded-xl p-2.5 flex justify-between items-center text-xs">
+          <div>
+            <div class="text-black font-black">${item.title.slice(0, 14)}...</div>
+            <div class="text-[10px] text-gray-500">NT$ ${item.price}・狀態：${item.status}</div>
+          </div>
+          <select onchange="updateItemStatus(${item.id}, this.value)" class="bg-yellow-300 comic-border-sm rounded text-[10px] font-black px-1.5 py-0.5 cursor-pointer">
+            <option value="上架中" ${item.status==='上架中'?'selected':''}>上架中</option>
+            <option value="已預訂" ${item.status==='已預訂'?'selected':''}>已預訂</option>
+            <option value="交易完成" ${item.status==='交易完成'?'selected':''}>交易完成</option>
+            <option value="已下架" ${item.status==='已下架'?'selected':''}>下架此物</option>
+          </select>
+        </div>
+      `).join('');
+    }
+
+    function updateItemStatus(id, newStatus) {
+      const item = mockProducts.find(p => p.id === id);
+      if (item) {
+        item.status = newStatus;
+        alert(`📦 商品【${item.title.slice(0, 10)}...】狀態已切換為：${newStatus}`);
+        filterItems();
+      }
+    }
+
+    function markAllNotificationsRead() {
+      document.querySelectorAll('#notificationList .unread').forEach(el => {
+        el.classList.remove('unread', 'bg-blue-50', 'bg-yellow-50');
+        el.classList.add('bg-gray-100');
+        const badge = el.querySelector('span.bg-red-500');
+        if (badge) badge.remove();
+      });
+      alert('🔔 全部通知已標記為已讀！');
+    }
+
+    // 商品詳細 Modal (F02, F15, F16, F19)
+    function showProductDetail(id) {
+      const item = mockProducts.find(p => p.id === id);
+      if (!item) return;
+
+      const modalContent = document.getElementById('modalContent');
+      modalContent.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <div class="h-64 rounded-xl overflow-hidden bg-yellow-100 comic-border mb-3">
+              <img id="detailMainImg" src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
+            </div>
+            <!-- 多圖輪播切換 (F02) -->
+            <div class="flex gap-2">
+              <div onclick="document.getElementById('detailMainImg').src='${item.image}'" class="w-16 h-16 rounded-lg comic-border overflow-hidden cursor-pointer border-2 border-black">
+                <img src="${item.image}" class="w-full h-full object-cover">
+              </div>
+              <div onclick="document.getElementById('detailMainImg').src='https://images.unsplash.com/photo-1512820790803-83ca734da794?w=600&auto=format&fit=crop&q=80'" class="w-16 h-16 rounded-lg comic-border overflow-hidden bg-yellow-100 flex items-center justify-center font-black text-xs text-center p-1 cursor-pointer">
+                內頁筆記圖
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col justify-between text-xs font-black">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-2">
+                  <span class="bg-red-600 text-yellow-300 px-2 py-0.5 rounded comic-border-sm">${item.tradeLabel}</span>
+                  <span class="bg-black text-yellow-300 px-2 py-0.5 rounded">🏛️ ${item.schoolName}</span>
+                </div>
+                <button onclick="openReportModal(${item.id})" class="text-red-600 hover:underline text-[11px] font-black">
+                  ⚠️ 檢舉此商品 (F19)
+                </button>
+              </div>
+
+              <h2 class="text-base text-black leading-snug mb-2 font-black">
+                ${item.title}
+              </h2>
+
+              <div class="p-3 bg-yellow-100 comic-border rounded-xl my-2">
+                <div class="comic-font text-3xl text-red-600 leading-none">
+                  ${item.price > 0 ? `NT$ ${item.price}` : item.tradeType === 'swap' ? '🔄 徵求以物換物' : '🎁 免費結緣 $0'}
+                </div>
+                <div class="text-[11px] text-gray-600 mt-1">
+                  參考原價：NT$ ${item.originalPrice}・戰力保存：${item.condition}・狀態：<span class="text-green-700">${item.status}</span>
+                </div>
+              </div>
+
+              <p class="text-gray-800 leading-relaxed mb-3">
+                ${item.description}
+              </p>
+
+              <div class="space-y-1 text-gray-700 border-t-2 border-black pt-2 mb-3">
+                <div>刊登隊友：<span class="text-black font-black">${item.seller}</span> (信譽 5.0 ★★★★★)</div>
+                <div>安全接頭點：<span class="text-red-600 font-black">${item.location}</span></div>
+                <div>🛡️ 身分防護：<span class="text-green-700 font-black">已通過教育部 .edu.tw 信箱驗證 (F20)</span></div>
+              </div>
+
+              <!-- 公開問答區 Q&A 與個資過濾 (F16) -->
+              <div class="bg-gray-50 comic-border-sm rounded-xl p-3 mb-3">
+                <div class="text-[11px] text-black font-black mb-1.5 flex items-center justify-between">
+                  <span>💬 公開問答 (系統自動過濾電話個資 F16)</span>
+                  <span id="qaCountBadge" class="text-gray-400 text-[10px]">1 則留言</span>
+                </div>
+                <div id="qaMessagesBox" class="space-y-1.5 mb-2 max-h-32 overflow-y-auto">
+                  <div class="bg-white p-2 rounded comic-border-sm text-[11px]">
+                    <span class="text-blue-700 font-black">工院李同學：</span> 請問微積分課本附的考古題有包含期末考嗎？
+                    <div class="text-gray-500 text-[10px] mt-0.5">賣家回覆：有的！包含過去兩年期中與期末手寫解答！</div>
+                  </div>
+                </div>
+                <div class="flex gap-1.5">
+                  <input type="text" id="detailQInput" placeholder="提出問題 (避免公開電話住址)..." class="flex-1 bg-white comic-border-sm rounded px-2 py-1 text-xs">
+                  <button onclick="submitDetailQ()" class="bg-yellow-300 hover:bg-yellow-400 text-black px-2.5 py-1 rounded comic-border-sm text-xs font-black">發問</button>
+                </div>
+                <div id="qaPrivacyWarning" class="hidden text-red-600 text-[10px] font-black mt-1">⚠️ 警告：偵測到電話/個資，已自動進行遮蔽防護！</div>
+              </div>
+            </div>
+
+            <!-- 出價 / 換物按鈕 (F15) -->
+            <div class="grid grid-cols-2 gap-2.5 pt-2">
+              <button onclick="alert('💬 已建立與 ${item.seller} 之面交私訊通訊頻道！約定地點：${item.location}'); closeModal('detailModal');" class="bg-yellow-300 hover:bg-yellow-400 text-black comic-border py-2.5 rounded-xl comic-shadow-sm comic-btn">
+                💬 密語私訊接頭
+              </button>
+              <button onclick="submitOffer('${item.tradeType}')" class="bg-red-600 hover:bg-red-700 text-yellow-300 comic-border py-2.5 rounded-xl comic-shadow-sm comic-btn">
+                ${item.tradeType === 'swap' ? '🔄 提出等價換物 (F15)' : '💰 直接預訂出價'}
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('detailModal').classList.remove('hidden');
+    }
+
+    // 提問送出與個資過濾 (F16)
+    function submitDetailQ() {
+      const input = document.getElementById('detailQInput');
+      const warning = document.getElementById('qaPrivacyWarning');
+      if (!input || !input.value.trim()) return;
+
+      let text = input.value.trim();
+      // Regex 檢查台灣手機號碼 (09xxxxxxxx 或 09xx-xxx-xxx) 與 Email
+      const phoneRegex = /09\d{2}[-\s]?\d{3}[-\s]?\d{3}/g;
+      const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
+
+      let filtered = false;
+      if (phoneRegex.test(text) || emailRegex.test(text)) {
+        text = text.replace(phoneRegex, '***-***-*** (已遮蔽個資)');
+        text = text.replace(emailRegex, '***@*** (已遮蔽個資)');
+        warning.classList.remove('hidden');
+        filtered = true;
+      } else {
+        warning.classList.add('hidden');
+      }
+
+      const box = document.getElementById('qaMessagesBox');
+      box.innerHTML += `
+        <div class="bg-white p-2 rounded comic-border-sm text-[11px]">
+          <span class="text-purple-700 font-black">${currentUser.name}：</span> ${text}
+          <div class="text-gray-400 text-[9px] mt-0.5">剛剛發布</div>
+        </div>
+      `;
+      input.value = '';
+      if (!filtered) alert('💬 問答留言已發送！');
+    }
+
+    // 出價或換物 (F15)
+    function submitOffer(tradeType) {
+      if (tradeType === 'swap') {
+        const itemOffer = prompt('請輸入你打算用來交換的物品名稱（如：Switch 遊戲片、4K螢幕）：');
+        if (itemOffer) {
+          const cashDiff = prompt('是否補差價？（若需要請輸入補貼金額，無補貼請填 0）：', '0');
+          alert(`💥 以物易物提案已送出！你提議以【${itemOffer}】交換，補差額：NT$ ${cashDiff}。賣家將於 24 小時內回覆！`);
+          closeModal('detailModal');
+        }
+      } else {
+        alert('💥 英雄出價已送達對方終端！賣家將於面交前進行最終確認。');
+        closeModal('detailModal');
+      }
+    }
+
+    // AI 拍照辨識自動上架 (AI01)
+    function simulateCameraScan() {
+      const box = document.getElementById('cameraPreviewBox');
+      box.innerHTML = `<span class="text-3xl animate-spin">⚡</span><span class="text-sm font-black mt-2">AI 深度視覺神經網絡分析中...</span>`;
+      setTimeout(() => {
+        box.innerHTML = `<img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&auto=format&fit=crop&q=80" class="w-full h-full object-cover rounded-lg">`;
+        document.getElementById('cameraScanResult').classList.remove('hidden');
+      }, 700);
+    }
+
+    function applyAiScannedItem() {
+      closeModal('aiCameraModal');
+      openListingModal();
+      document.getElementById('newTitle').value = "【9成新】Stewart Calculus 微積分 原文書 8th Edition";
+      document.getElementById('newCategory').value = "book";
+      document.getElementById('newPrice').value = 450;
+      document.getElementById('newNote').value = "總圖書館一樓自取，內頁乾淨無筆記，可換物或補差價";
+    }
+
+    // AI 二手行情估算 (AI02)
+    function calcAiPrice() {
+      const condition = document.getElementById('aiCondition').value;
+      const original = parseFloat(document.getElementById('aiOriginalPrice').value) || 1000;
+      let minP = Math.round(original * (condition === '10' ? 0.6 : condition === '9' ? 0.32 : 0.22));
+      let maxP = Math.round(minP * 1.25);
+
+      document.getElementById('aiEstimatePriceRange').textContent = `NT$ ${minP} ~ ${maxP}`;
+      document.getElementById('aiResultBox').classList.remove('hidden');
+      alert(`💥 AI 估價已完成！考量物況與全台大數據，推薦定價區間：NT$ ${minP} ~ ${maxP} (估算值)`);
+    }
+
+    // AI 導購聊天助理 (AI04)
+    function sendChatMessage() {
+      const input = document.getElementById('userChatInput');
+      const val = input.value.trim();
+      if (!val) return;
+      quickAskChat(val);
+      input.value = '';
+    }
+
+    function quickAskChat(text) {
+      const chat = document.getElementById('chatMessages');
+      chat.innerHTML += `
+        <div class="bg-blue-600 text-yellow-200 comic-border p-3 rounded-xl max-w-[85%] ml-auto">
+          ${text}
+        </div>
+      `;
+
+      let reply = `💥 收到指令「${text}」！雷達已掃描成大與台大基地庫存，推薦確認微積分課本與 3C 神裝！`;
+      if (text.includes('平板')) {
+        reply = `💥 為你鎖定 1 筆神級裝備：【iPad Air 4 64G 太空灰】陽明交大基地接受以物易物！`;
+      } else if (text.includes('耳機') || text.includes('成大')) {
+        reply = `💥 鎖定成大勝利校區【Sony WH-1000XM4 降噪耳機】(特價 NT$ 3,800)！`;
+      } else if (text.includes('微積分') || text.includes('普物')) {
+        reply = `💥 推薦【Stewart 微積分 8e】(NT$ 450) 與清大【大一普物實驗衣 0元贈送】！`;
+      }
+
+      setTimeout(() => {
+        chat.innerHTML += `
+          <div class="bg-yellow-100 comic-border p-3 rounded-xl text-black max-w-[85%] speech-bubble">
+            ${reply}
+          </div>
+        `;
+        chat.scrollTop = chat.scrollHeight;
+      }, 200);
+    }
+
+    // 上傳照片檢查 (F13 規格要求)
+    function validateUploadedImages(input) {
+      const errorBox = document.getElementById('uploadFileError');
+      if (input.files.length > 5) {
+        errorBox.textContent = '⚠️ 超過上傳上限！最多僅能上傳 5 張照片！';
+        errorBox.classList.remove('hidden');
+        input.value = '';
+        return;
+      }
+      for (let i = 0; i < input.files.length; i++) {
+        if (input.files[i].size > 5 * 1024 * 1024) {
+          errorBox.textContent = '⚠️ 單一照片檔案不可超過 5MB！';
+          errorBox.classList.remove('hidden');
+          input.value = '';
+          return;
+        }
+      }
+      errorBox.classList.add('hidden');
+    }
+
+    // 刊登物品處理 (F13)
+    function handleNewListing(e) {
+      e.preventDefault();
+      const title = document.getElementById('newTitle').value.trim();
+      const price = parseInt(document.getElementById('newPrice').value) || 0;
+      const schoolId = document.getElementById('newSchool').value;
+      const tradeType = document.getElementById('newTradeType').value;
+      const note = document.getElementById('newNote').value.trim();
+
+      if (!title || !note) {
+        alert('⚠️ 請填寫完整的裝備名稱與面交指引！');
+        return;
+      }
+
+      const schoolMap = {
+        ntu: '國立臺灣大學',
+        nycu: '國立陽明交通',
+        nthu: '國立清華大學',
+        ncku: '國立成功大學',
+        nccu: '國立政治大學'
+      };
+
+      const newItem = {
+        id: Date.now(),
+        title: title,
+        category: document.getElementById('newCategory').value,
+        schoolId: schoolId,
+        schoolName: schoolMap[schoolId] || '國立大學',
+        price: price,
+        originalPrice: price * 2 || 1000,
+        tradeType: tradeType,
+        tradeLabel: tradeType === 'swap' ? '🔄 物品交換' : tradeType === 'free' ? '🎁 0元結緣' : 'POW! 破盤買賣',
+        condition: '良好 (個人自用)',
+        location: note.slice(0, 15),
+        seller: currentUser.name,
+        sellerEmail: currentUser.email,
+        verified: currentUser.verified,
+        status: '上架中',
+        image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=600&auto=format&fit=crop&q=80',
+        description: note
+      };
+
+      mockProducts.unshift(newItem);
+      renderProducts(mockProducts);
+      closeModal('listingModal');
+      document.getElementById('listingForm').reset();
+      alert('💥 POW! 戰備物品已發佈至校園英雄市集！');
+    }
+
+    // 會員註冊與登入驗證 (F11, F20)
+    function openAuthModal(mode) {
+      document.getElementById('authModal').classList.remove('hidden');
+    }
+
+    function handleAuthSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('authEmailInput').value.trim();
+      const name = document.getElementById('authNameInput').value.trim() || '校園新特工';
+      const emailError = document.getElementById('authEmailError');
+
+      // 驗證是否為 .edu.tw 信箱 (F20)
+      if (!email.endsWith('.edu.tw')) {
+        emailError.classList.remove('hidden');
+        return;
+      }
+      emailError.classList.add('hidden');
+
+      currentUser = {
+        name: name,
+        email: email,
+        school: email.includes('ntu') ? '國立臺灣大學' : email.includes('nycu') ? '國立陽明交通' : email.includes('nthu') ? '國立清華大學' : '教育部在學大專生',
+        department: '認證特工會員',
+        verified: true
+      };
+
+      document.getElementById('userNameLabel').textContent = currentUser.name;
+      document.getElementById('userSchoolLabel').textContent = currentUser.school + '・' + currentUser.department;
+      closeModal('authModal');
+      alert(`🦸 登入驗證成功！歡迎 ${currentUser.name}，已享有 .edu.tw 藍勾信用標章！`);
+    }
+
+    function logoutCurrentUser() {
+      currentUser = {
+        name: '訪客同學',
+        email: '',
+        school: '未登入',
+        department: '',
+        verified: false
+      };
+      document.getElementById('userNameLabel').textContent = '訪客身分 (未驗證)';
+      document.getElementById('userSchoolLabel').textContent = '請登入學生信箱以啟用完整權限';
+      document.getElementById('userEduBadge').textContent = '未認證';
+      document.getElementById('userEduBadge').classList.replace('bg-green-600', 'bg-gray-400');
+      alert('已登出特工帳號。');
+    }
+
+    function handlePasswordReset() {
+      const email = prompt('請輸入要重設密碼的 .edu.tw 學校信箱：');
+      if (email && email.endsWith('.edu.tw')) {
+        alert('📧 重設密碼驗證信已發送至該學生信箱，請至學校信箱收信！');
+      } else {
+        alert('⚠️ 請輸入有效的 .edu.tw 學生信箱！');
+      }
+    }
+
+    // 檢舉與管理員後台 (F19)
+    function openReportModal(itemId) {
+      document.getElementById('reportTargetItemId').value = itemId;
+      document.getElementById('reportItemModal').classList.remove('hidden');
+    }
+
+    function handleReportSubmit(e) {
+      e.preventDefault();
+      const id = document.getElementById('reportTargetItemId').value;
+      const reason = document.getElementById('reportReasonSelect').value;
+      closeModal('reportItemModal');
+      alert(`⚠️ 檢舉案件已送交！編號 #${id} 理由：${reason}。管理員將於 24 小時內審查！`);
+    }
+
+    function openAdminModal() {
+      document.getElementById('adminModal').classList.remove('hidden');
+    }
+
+    function resolveReport(btn, action) {
+      const card = btn.closest('.bg-red-50, .bg-yellow-50');
+      if (card) {
+        card.innerHTML = `<span class="text-green-800 font-black">✓ 已處置結案：【${action}】</span>`;
+      }
+    }
+
+    // 重設全部條件
+    function resetFilters() {
+      document.getElementById('schoolSelector').value = 'all';
+      document.getElementById('searchInput').value = '';
+      document.getElementById('minPriceInput').value = '';
+      document.getElementById('maxPriceInput').value = '';
+      document.getElementById('verifiedOnly').checked = false;
+      document.getElementById('priceRangeError').classList.add('hidden');
+      currentTradeType = 'all';
+      currentTag = 'all';
+      setTradeType('all');
+      renderProducts(mockProducts);
+    }
+
+    // 彈窗開關控制
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+    function openAiPriceModal() { openModal('aiPriceModal'); }
+    function openAiChatModal() { openModal('aiChatModal'); }
+    function openAiCameraModal() { openModal('aiCameraModal'); }
+    function openListingModal() { openModal('listingModal'); }
+    function openMapModal() { openModal('mapModal'); }
+
+    // 初始化頁面
+    window.addEventListener('DOMContentLoaded', () => {
+      renderProducts(mockProducts);
+    });
+  </script>
+</body>
+</html>

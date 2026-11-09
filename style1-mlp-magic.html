@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UniTrade 校園二手市集 - 彩虹小馬夢幻魔法風 (My Little Pony Style)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Fredoka & Noto Sans TC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700;800&family=Noto+Sans+TC:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Fredoka', 'Noto Sans TC', cursive, sans-serif;
+      background: linear-gradient(135deg, #FFF0F5 0%, #F5F3FF 40%, #E0F2FE 80%, #FEF9C3 100%);
+      color: #4A1D96;
+      background-attachment: fixed;
+    }
+    .rainbow-gradient {
+      background: linear-gradient(90deg, #F43F5E, #FB923C, #FBBF24, #34D399, #38BDF8, #818CF8, #C084FC);
+    }
+    .rainbow-text {
+      background: linear-gradient(90deg, #E11D48, #D97706, #059669, #0284C7, #7C3AED);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .pony-card {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(12px);
+      border: 3px solid #FBCFE8;
+      border-radius: 28px;
+      box-shadow: 0 12px 30px -6px rgba(244, 114, 182, 0.25), 0 4px 6px -2px rgba(192, 132, 252, 0.15);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .pony-card:hover {
+      transform: translateY(-6px) rotate(-0.5deg);
+      border-color: #F472B6;
+      box-shadow: 0 20px 35px -8px rgba(244, 114, 182, 0.38), 0 0 15px rgba(251, 191, 36, 0.3);
+    }
+    .bubble-btn {
+      border-radius: 9999px;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 4px 14px rgba(244, 114, 182, 0.35);
+    }
+    .bubble-btn:hover {
+      transform: scale(1.05) translateY(-2px);
+      box-shadow: 0 8px 20px rgba(244, 114, 182, 0.5);
+    }
+    .bubble-btn:active {
+      transform: scale(0.96);
+    }
+    .sparkle-tag {
+      background: linear-gradient(135deg, #FDF2F8, #EDE9FE);
+      border: 2px solid #F472B6;
+      box-shadow: 0 2px 8px rgba(244, 114, 182, 0.2);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- 彩虹頂部滾動飄帶條 -->
+  <div class="rainbow-gradient text-white py-1.5 px-4 text-xs font-bold text-center tracking-wider shadow-sm flex items-center justify-center gap-2">
+    <span>✨ 🌈 友誼就是魔法！大學生彩虹二手物品交換市集 🦄 0元免費贈送・同校面交超安心・AI 拍照魔法估價 💖 ✨</span>
+  </div>
+
+  <!-- 主導覽列 Navbar -->
+  <header class="bg-white/90 backdrop-blur-md border-b-4 border-pink-200 sticky top-0 z-40 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- Logo 品牌 -->
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-13 h-13 bg-gradient-to-tr from-pink-400 via-purple-400 to-sky-300 rounded-3xl p-1 shadow-lg shadow-pink-300/50 group-hover:rotate-12 transition-transform">
+          <div class="w-full h-full bg-white rounded-[22px] flex items-center justify-center text-2xl">
+            🦄
+          </div>
+        </div>
+        <div>
+          <span class="text-2xl font-extrabold tracking-tight rainbow-text block leading-none">
+            UniTrade 🦄 小馬市集
+          </span>
+          <span class="text-[11px] font-bold text-pink-500 tracking-wider flex items-center gap-1">
+            <span>✨ 彩虹小馬・夢幻魔法風</span>
+          </span>
+        </div>
+      </a>
+
+      <!-- 校園切換與搜尋列 -->
+      <div class="hidden md:flex items-center flex-1 max-w-xl mx-4 gap-2">
+        <div class="relative w-44">
+          <select id="schoolSelector" onchange="filterItems()" class="w-full bg-pink-50 border-2 border-pink-300 rounded-full py-2 px-3.5 text-xs font-bold text-purple-900 focus:outline-none focus:border-pink-500 cursor-pointer shadow-xs">
+            <option value="all">🌈 全台魔法校園</option>
+            <option value="ntu">國立臺灣大學 🏰</option>
+            <option value="nycu">國立陽明交通 ⚡</option>
+            <option value="nthu">國立清華大學 🌟</option>
+            <option value="ncku">國立成功大學 🌿</option>
+            <option value="nccu">國立政治大學 🌸</option>
+          </select>
+        </div>
+        <div class="relative flex-1">
+          <input type="text" id="searchInput" oninput="filterItems()" placeholder="✨ 搜尋想找的魔法教科書、iPad、小家電..." class="w-full bg-pink-50/70 border-2 border-pink-300 rounded-full py-2 pl-4 pr-10 text-xs font-bold text-purple-900 placeholder-purple-300 focus:outline-none focus:bg-white focus:border-pink-500 transition-colors shadow-xs">
+          <span class="absolute right-3.5 top-2 text-pink-400 text-sm">🪄</span>
+        </div>
+      </div>
+
+      <!-- 右側動作按鈕 -->
+      <div class="flex items-center gap-3">
+        <button onclick="openAiChatModal()" class="hidden sm:flex items-center gap-1.5 bg-purple-100 hover:bg-purple-200 border-2 border-purple-300 text-purple-800 px-3.5 py-2 text-xs font-bold rounded-full bubble-btn">
+          <span>🔮</span> 魔法選書 AI
+        </button>
+        <button onclick="openListingModal()" class="flex items-center gap-1.5 bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-white px-4 py-2 text-xs font-extrabold rounded-full bubble-btn shadow-md shadow-pink-300/40">
+          <span>🌟</span> 刊登物品
+        </button>
+        <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-pink-300 to-yellow-200 p-0.5 shadow-sm cursor-pointer" title="小馬認證學生：王同學 (.edu.tw)">
+          <div class="w-full h-full bg-white rounded-full flex items-center justify-center text-lg">
+            🌸
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 彩虹小馬夢幻 Hero 刊頭 -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-4 w-full">
+    <div class="bg-gradient-to-r from-pink-200/90 via-purple-100/90 to-sky-200/90 border-4 border-white rounded-[36px] p-6 sm:p-10 shadow-xl shadow-pink-200/60 relative overflow-hidden backdrop-blur-md">
+      <!-- 裝飾小貼圖 -->
+      <div class="absolute right-6 -bottom-6 text-8xl opacity-80 pointer-events-none select-none">
+        🌈
+      </div>
+      <div class="absolute right-40 top-4 text-5xl opacity-70 pointer-events-none select-none">
+        ✨
+      </div>
+
+      <div class="relative z-10 max-w-2xl">
+        <div class="inline-flex items-center gap-1.5 bg-white/90 border-2 border-pink-300 text-pink-600 font-extrabold text-xs px-3.5 py-1 rounded-full mb-3 shadow-xs">
+          <span>💖 友誼與永續</span>
+          <span>•</span>
+          <span>校園閒置物品的神奇魔法重生！</span>
+        </div>
+        <h1 class="text-2xl sm:text-4xl font-extrabold text-purple-900 leading-tight mb-3">
+          二手課本換零用錢，<br>
+          <span class="rainbow-text">以物易物交換</span> 超級心動好物！
+        </h1>
+        <p class="text-purple-800 text-xs sm:text-sm font-semibold mb-6 max-w-lg leading-relaxed">
+          全台大專院校 .edu.tw 認證保護！約在總圖書館借書台、學生餐廳明亮處歡樂面交，免運費又安心！
+        </p>
+
+        <!-- 魔法分類快捷 Tag -->
+        <div class="flex flex-wrap gap-2 text-xs">
+          <button onclick="filterByTag('book')" class="bg-white/90 hover:bg-pink-100 border-2 border-pink-300 text-purple-900 font-bold px-3.5 py-1.5 rounded-full bubble-btn flex items-center gap-1">
+            📖 魔法教科書
+          </button>
+          <button onclick="filterByTag('3c')" class="bg-white/90 hover:bg-sky-100 border-2 border-sky-300 text-sky-800 font-bold px-3.5 py-1.5 rounded-full bubble-btn flex items-center gap-1">
+            💻 3C平板筆電
+          </button>
+          <button onclick="filterByTag('swap')" class="bg-gradient-to-r from-amber-200 to-pink-200 border-2 border-pink-300 text-pink-900 font-extrabold px-3.5 py-1.5 rounded-full bubble-btn flex items-center gap-1">
+            🔄 物品交換魔法池
+          </button>
+          <button onclick="filterByTag('free')" class="bg-gradient-to-r from-emerald-100 to-teal-100 border-2 border-teal-300 text-teal-800 font-bold px-3.5 py-1.5 rounded-full bubble-btn flex items-center gap-1">
+            🎁 0元免費結緣
+          </button>
+          <button onclick="openAiPriceModal()" class="bg-gradient-to-r from-purple-400 to-pink-400 text-white font-extrabold px-3.5 py-1.5 rounded-full bubble-btn flex items-center gap-1 shadow-sm">
+            🔮 AI 二手身價水晶球
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 交易模式過濾列 Filter Bar -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 w-full">
+    <div class="pony-card p-4 flex flex-wrap items-center justify-between gap-3">
+      
+      <!-- 模式按鈕組 -->
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="text-xs font-extrabold text-pink-500 mr-1">交易型態：</span>
+        <button onclick="setTradeType('all')" id="btn-trade-all" class="trade-type-btn text-xs font-extrabold px-4 py-1.5 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 text-white shadow-xs">
+          全部好物 ✨
+        </button>
+        <button onclick="setTradeType('buy')" id="btn-trade-buy" class="trade-type-btn text-xs font-bold px-4 py-1.5 rounded-full bg-pink-50 text-purple-800 hover:bg-pink-100 border border-pink-200">
+          💰 現金買賣
+        </button>
+        <button onclick="setTradeType('swap')" id="btn-trade-swap" class="trade-type-btn text-xs font-bold px-4 py-1.5 rounded-full bg-pink-50 text-purple-800 hover:bg-pink-100 border border-pink-200">
+          🔄 以物易物
+        </button>
+        <button onclick="setTradeType('free')" id="btn-trade-free" class="trade-type-btn text-xs font-bold px-4 py-1.5 rounded-full bg-pink-50 text-purple-800 hover:bg-pink-100 border border-pink-200">
+          🎁 0元結緣
+        </button>
+      </div>
+
+      <!-- 排序與計數 -->
+      <div class="flex items-center gap-3 text-xs">
+        <span id="itemCount" class="text-pink-700 font-extrabold bg-pink-100 border-2 border-pink-300 px-3 py-1 rounded-full">共 8 項魔法物品</span>
+        <select id="sortSelector" onchange="sortItems()" class="bg-pink-50 border-2 border-pink-300 text-purple-900 rounded-full py-1 px-3 text-xs font-bold focus:outline-none cursor-pointer">
+          <option value="newest">🕒 最新上架</option>
+          <option value="price-asc">💵 價格由低到高</option>
+          <option value="price-desc">💰 價格由高到低</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- 商品網格 Grid -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex-1 w-full">
+    <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- 由 JS 動態注入 -->
+    </div>
+
+    <!-- 空白狀態 -->
+    <div id="emptyState" class="hidden text-center py-16 pony-card my-8">
+      <div class="text-6xl mb-3">🦄💭</div>
+      <h3 class="text-xl font-extrabold text-purple-900 mb-1">魔法泡泡裡沒有找到這項物品耶！</h3>
+      <p class="text-xs font-bold text-pink-600 max-w-sm mx-auto mb-4">可以試試放寬搜尋條件，或者當第一個在學校上架的魔法小馬！</p>
+      <button onclick="resetFilters()" class="text-xs font-extrabold bg-gradient-to-r from-pink-400 to-purple-400 text-white px-5 py-2.5 rounded-full bubble-btn shadow-md">
+        重設所有條件 ✨
+      </button>
+    </div>
+  </main>
+
+  <!-- 安全面交指引與小馬叮嚀 -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 w-full">
+    <div class="bg-gradient-to-r from-pink-100 via-yellow-100 to-sky-100 border-3 border-pink-300 rounded-[28px] p-5 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-3.5">
+        <div class="w-12 h-12 rounded-2xl bg-white border-2 border-pink-300 flex items-center justify-center text-2xl shadow-xs flex-shrink-0">
+          💖
+        </div>
+        <div>
+          <h4 class="font-extrabold text-sm text-purple-900 flex items-center gap-1.5">
+            小馬校園安全守則：同校面交最安心！
+            <span class="text-[10px] bg-pink-500 text-white font-extrabold px-2 py-0.5 rounded-full">安全第一</span>
+          </h4>
+          <p class="text-xs text-purple-700 font-semibold mt-0.5">
+            我們建議在白天的校園總圖書館門口、大樓警衛室前或學生餐廳見面，檢查物況無誤再付款！
+          </p>
+        </div>
+      </div>
+      <button onclick="openMapModal()" class="text-xs font-extrabold bg-white border-2 border-pink-400 text-pink-600 hover:bg-pink-500 hover:text-white px-4 py-2 rounded-full bubble-btn whitespace-nowrap">
+        📍 檢視校園安全面交點
+      </button>
+    </div>
+  </section>
+
+  <!-- 頁尾 Footer -->
+  <footer class="bg-white/80 border-t-2 border-pink-200 py-6 text-xs text-purple-700 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 text-center">
+      <div class="font-extrabold text-base rainbow-text mb-1">
+        🦄 UniTrade 校園二手市集・彩虹小馬夢幻風格
+      </div>
+      <p class="text-[11px] text-pink-500 mb-3 font-semibold">
+        友誼就是魔法・大專院校二手交易與交換・.edu.tw 學生安全認證
+      </p>
+      <div class="flex justify-center gap-4 text-xs font-bold">
+        <a href="index.html" class="hover:text-pink-600 underline">返回風格總覽</a>
+        <span>•</span>
+        <a href="style2-american-comic.html" class="hover:text-pink-600 underline">風格二：經典美漫波普風</a>
+        <span>•</span>
+        <a href="style3-y2k-candytoon.html" class="hover:text-pink-600 underline">風格三：美式千禧卡通風</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==================== 彈窗群組 Modals ==================== -->
+
+  <!-- 商品詳情 Modal -->
+  <div id="detailModal" class="fixed inset-0 bg-purple-950/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="pony-card max-w-2xl w-full p-6 border-pink-400 shadow-2xl max-h-[90vh] overflow-y-auto relative bg-white">
+      <button onclick="closeModal('detailModal')" class="absolute right-4 top-4 w-8 h-8 rounded-full bg-pink-100 hover:bg-pink-200 text-pink-700 text-sm font-extrabold flex items-center justify-center">✕</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- AI 水晶球估價 Modal -->
+  <div id="aiPriceModal" class="fixed inset-0 bg-purple-950/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="pony-card max-w-md w-full p-6 border-purple-300 relative bg-white">
+      <button onclick="closeModal('aiPriceModal')" class="absolute right-4 top-4 w-8 h-8 rounded-full bg-pink-100 hover:bg-pink-200 text-pink-700 text-sm font-extrabold flex items-center justify-center">✕</button>
+      
+      <div class="flex items-center gap-3 mb-4">
+        <span class="text-3xl">🔮</span>
+        <div>
+          <h3 class="text-base font-extrabold text-purple-900">AI 二手身價魔法水晶球</h3>
+          <p class="text-[11px] text-pink-500 font-bold">大數據占卜全台大學校園合理二手身價！</p>
+        </div>
+      </div>
+
+      <div class="space-y-3 text-xs font-bold text-purple-900">
+        <div>
+          <label class="block mb-1 text-purple-800">物品名稱 / 教材書目</label>
+          <input type="text" id="aiItemName" value="微積分 Stewart 8th Edition 原文書" class="w-full bg-pink-50 border-2 border-pink-200 rounded-2xl p-2.5 focus:outline-none focus:border-pink-500">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block mb-1 text-purple-800">保存魔法品況</label>
+            <select class="w-full bg-pink-50 border-2 border-pink-200 rounded-2xl p-2.5 focus:outline-none focus:border-pink-500">
+              <option>9 成新（僅少許擦痕）</option>
+              <option>8 成新（含部分筆記）</option>
+              <option>全新完美保存</option>
+            </select>
+          </div>
+          <div>
+            <label class="block mb-1 text-purple-800">原購參考價</label>
+            <input type="number" value="1400" class="w-full bg-pink-50 border-2 border-pink-200 rounded-2xl p-2.5 focus:outline-none focus:border-pink-500">
+          </div>
+        </div>
+
+        <button onclick="calcAiPrice()" class="w-full bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-white py-2.5 rounded-full font-extrabold bubble-btn text-xs mt-2">
+          ✨ 啟動小馬 AI 魔法占卜！
+        </button>
+
+        <div id="aiResultBox" class="bg-gradient-to-r from-pink-50 to-purple-50 border-2 border-pink-200 rounded-2xl p-4 mt-2">
+          <div class="flex justify-between items-center text-xs">
+            <span class="font-extrabold text-purple-900">魔法建議出清價：</span>
+            <span class="text-pink-600 font-black text-sm">NT$ 420 ~ 500</span>
+          </div>
+          <p class="text-[11px] text-purple-600 mt-1 font-semibold">
+            💖 同校開學季轉手成功率高達 94%，最快 3 天內可以在總圖交給學弟妹！
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI 導購聊天助理 Modal -->
+  <div id="aiChatModal" class="fixed inset-0 bg-purple-950/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="pony-card max-w-md w-full p-6 border-pink-300 relative bg-white flex flex-col h-[500px]">
+      <button onclick="closeModal('aiChatModal')" class="absolute right-4 top-4 w-8 h-8 rounded-full bg-pink-100 hover:bg-pink-200 text-pink-700 text-sm font-extrabold flex items-center justify-center">✕</button>
+
+      <div class="flex items-center gap-2 pb-3 border-b-2 border-pink-100">
+        <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-pink-400 to-purple-400 flex items-center justify-center text-sm">🦄</div>
+        <div>
+          <h3 class="font-extrabold text-xs text-purple-900">小馬 AI 智慧導購精靈</h3>
+          <p class="text-[10px] text-pink-500 font-bold">● 隨時為您尋找心願清單</p>
+        </div>
+      </div>
+
+      <div id="chatMessages" class="flex-1 overflow-y-auto py-3 space-y-3 text-xs font-bold text-purple-900">
+        <div class="bg-pink-50 border border-pink-200 p-3 rounded-2xl text-purple-900 max-w-[85%]">
+          嗨同學！我是小馬市集 AI 精靈 🦄✨ 想要找哪一科的課本或宿舍小家電？可以直接告訴我願望喔！
+        </div>
+        <div class="bg-gradient-to-r from-pink-400 to-purple-400 text-white p-3 rounded-2xl max-w-[85%] ml-auto">
+          我想找 2000 元內、適合上課讀 PDF 筆記的平板或周邊！
+        </div>
+        <div class="bg-pink-50 border border-pink-200 p-3 rounded-2xl max-w-[85%] space-y-2">
+          <p>小馬為你施展搜尋魔法！找到這筆心動項目：</p>
+          <div class="bg-white p-2.5 rounded-xl border-2 border-pink-200 cursor-pointer hover:border-pink-400 shadow-2xs" onclick="showProductDetail(2)">
+            <div class="font-extrabold text-pink-600">iPad Air 4 太空灰 (接受物品交換)</div>
+            <div class="text-[11px] text-purple-600">陽明交通大學・可補差額交換</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="pt-3 border-t-2 border-pink-100 flex gap-2">
+        <input type="text" id="userChatInput" placeholder="告訴小馬精靈你的需求..." class="flex-1 bg-pink-50 border-2 border-pink-200 rounded-full px-4 py-2 text-xs font-bold text-purple-900 focus:outline-none focus:border-pink-400">
+        <button onclick="sendChatMessage()" class="bg-gradient-to-r from-pink-400 to-purple-400 text-white px-4 py-2 rounded-full text-xs font-extrabold bubble-btn">
+          送出 ✨
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 刊登物品 Modal -->
+  <div id="listingModal" class="fixed inset-0 bg-purple-950/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="pony-card max-w-lg w-full p-6 border-pink-300 relative max-h-[90vh] overflow-y-auto bg-white">
+      <button onclick="closeModal('listingModal')" class="absolute right-4 top-4 w-8 h-8 rounded-full bg-pink-100 hover:bg-pink-200 text-pink-700 text-sm font-extrabold flex items-center justify-center">✕</button>
+
+      <div class="flex items-center gap-2.5 mb-4">
+        <span class="text-2xl">🌟</span>
+        <div>
+          <h3 class="text-base font-extrabold text-purple-900">刊登我的二手魔法寶物</h3>
+          <p class="text-[11px] text-pink-500 font-bold">讓閒置物資在校園小馬社群中繼續發光！</p>
+        </div>
+      </div>
+
+      <form onsubmit="handleNewListing(event)" class="space-y-3.5 text-xs font-bold text-purple-900">
+        <div>
+          <label class="block mb-1 text-purple-800">寶物名稱 *</label>
+          <input type="text" id="newTitle" required placeholder="如：【9成新】普通物理 原文書 + 滿分筆記" class="w-full bg-pink-50 border-2 border-pink-200 rounded-2xl p-2.5 focus:outline-none focus:border-pink-500">
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block mb-1 text-purple-800">類別 *</label>
+            <select id="newCategory" class="w-full bg-pink-50 border-2 border-pink-200 rounded-2xl p-2.5 focus:outline-none focus:border-pink-500">
+              <option value="book">魔法教科書</option>
+              <option value="3c">3C電子與配件</option>
+              <option value="dorm">宿舍家具與電器</option>
+              <option value="other">生活良品</option>
+            </select>
+          </div>
+          <div>
+            <label class="block mb-1 text-purple-800">所屬大學 *</label>
+            <select id="newSchool" class="w-full bg-pink-50 border-2 border-pink-200 rounded-2xl p-2.5 focus:outline-none focus:border-pink-500">
+              <option value="ntu">國立臺灣大學</option>
+              <option value="nycu">國立陽明交通</option>
+              <option value="nthu">國立清華大學</option>
+              <option value="ncku">國立成功大學</option>
+              <option value="nccu">國立政治大學</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block mb-1 text-purple-800">交易形式 *</label>
+            <select id="newTradeType" class="w-full bg-pink-50 border-2 border-pink-200 rounded-2xl p-2.5 focus:outline-none focus:border-pink-500">
+              <option value="buy">💰 現金讓售</option>
+              <option value="swap">🔄 以物易物</option>
+              <option value="free">🎁 0元結緣</option>
+            </select>
+          </div>
+          <div>
+            <label class="block mb-1 text-purple-800">讓售價格 (NT$) *</label>
+            <input type="number" id="newPrice" value="450" class="w-full bg-pink-50 border-2 border-pink-200 rounded-2xl p-2.5 focus:outline-none focus:border-pink-500">
+          </div>
+        </div>
+
+        <div>
+          <label class="block mb-1 text-purple-800">希望交換物或面交地標指引</label>
+          <input type="text" id="newNote" placeholder="例如：總圖書館門口自取，亦可換微積分課本" class="w-full bg-pink-50 border-2 border-pink-200 rounded-2xl p-2.5 focus:outline-none focus:border-pink-500">
+        </div>
+
+        <button type="submit" class="w-full bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-white py-3 rounded-full font-extrabold bubble-btn text-xs mt-2 shadow-md">
+          🦄 確認發佈至彩虹校園市集！
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 面交地圖 Modal -->
+  <div id="mapModal" class="fixed inset-0 bg-purple-950/40 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="pony-card max-w-lg w-full p-6 border-pink-300 relative bg-white">
+      <button onclick="closeModal('mapModal')" class="absolute right-4 top-4 w-8 h-8 rounded-full bg-pink-100 hover:bg-pink-200 text-pink-700 text-sm font-extrabold flex items-center justify-center">✕</button>
+      
+      <div class="flex items-center gap-2 mb-3">
+        <span class="text-2xl">📍</span>
+        <h3 class="text-base font-extrabold text-purple-900">全台大專院校安全面交推薦點</h3>
+      </div>
+      <div class="space-y-2.5 text-xs font-bold text-purple-800">
+        <div class="p-3 bg-pink-50 border-2 border-pink-200 rounded-2xl">
+          <div class="text-pink-600 font-extrabold mb-0.5">國立臺灣大學</div>
+          <div>首選地點：總圖書館一樓自習室大廳、小福廣場</div>
+        </div>
+        <div class="p-3 bg-purple-50 border-2 border-purple-200 rounded-2xl">
+          <div class="text-purple-700 font-extrabold mb-0.5">國立陽明交通大學</div>
+          <div>首選地點：浩然圖書館一樓大廳、二餐全家門口</div>
+        </div>
+        <div class="p-3 bg-sky-50 border-2 border-sky-200 rounded-2xl">
+          <div class="text-sky-700 font-extrabold mb-0.5">國立成功大學</div>
+          <div>首選地點：勝利校區成大會館門口、總圖自習室前</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== JavaScript 資料邏輯 ==================== -->
+  <script>
+    const mockProducts = [
+      {
+        id: 1,
+        title: "【9成新】Stewart Calculus 微積分 原文書 8th Edition",
+        category: "book",
+        schoolId: "ntu",
+        schoolName: "國立臺灣大學",
+        price: 450,
+        originalPrice: 1400,
+        tradeType: "buy",
+        tradeLabel: "💰 現金買賣",
+        condition: "9成新 (僅鉛筆微筆記)",
+        location: "總圖書館一樓正門",
+        seller: "電機二・陳同學",
+        verified: true,
+        image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600&auto=format&fit=crop&q=80",
+        description: "大一必修微積分課本，內頁乾淨無破損，附手寫期中期末重點整理講義。同校面交可再折 50 元。"
+      },
+      {
+        id: 2,
+        title: "【以物易物】iPad Air 4 64G 太空灰 (附手寫筆)",
+        category: "3c",
+        schoolId: "nycu",
+        schoolName: "國立陽明交通",
+        price: 0,
+        originalPrice: 18900,
+        tradeType: "swap",
+        tradeLabel: "🔄 物品交換",
+        condition: "85成新 (功能完好)",
+        location: "二餐全家便利商店前",
+        seller: "資工三・林同學",
+        verified: true,
+        image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=600&auto=format&fit=crop&q=80",
+        description: "想交換 Switch OLED 主機或 27 吋 4K 外接螢幕！可補差額，歡迎私訊洽談。"
+      },
+      {
+        id: 3,
+        title: "【免費贈送 0元】大一普通物理/普化實驗衣 + 護目鏡",
+        category: "dorm",
+        schoolId: "nthu",
+        schoolName: "國立清華大學",
+        price: 0,
+        originalPrice: 650,
+        tradeType: "free",
+        tradeLabel: "🎁 0元結緣",
+        condition: "良好 (穿一學期)",
+        location: "綜二館一樓自取",
+        seller: "化學四・黃學姐",
+        verified: true,
+        image: "https://images.unsplash.com/photo-1576086213369-97a306d36557?w=600&auto=format&fit=crop&q=80",
+        description: "畢業離校贈予學弟妹，SIZE 為 L 號，洗淨無污，清大學生優先自取。"
+      },
+      {
+        id: 4,
+        title: "【85成新】Sony WH-1000XM4 主動降噪無線耳機",
+        category: "3c",
+        schoolId: "ncku",
+        schoolName: "國立成功大學",
+        price: 3800,
+        originalPrice: 8900,
+        tradeType: "buy",
+        tradeLabel: "💰 降價出售",
+        condition: "85成新 (耳罩更換全新)",
+        location: "勝利校區成大會館前",
+        seller: "建築四・張同學",
+        verified: true,
+        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&auto=format&fit=crop&q=80",
+        description: "自習室讀書抗噪神物，功能完整，附原裝配件，AI 市場合理估價約 3700~4200 元。"
+      },
+      {
+        id: 5,
+        title: "【95成新】宿舍節能雙門小冰箱 (含獨立冷凍層)",
+        category: "dorm",
+        schoolId: "nccu",
+        schoolName: "國立政治大學",
+        price: 1600,
+        originalPrice: 4800,
+        tradeType: "buy",
+        tradeLabel: "💰 現金買賣",
+        condition: "95成新 (低運轉噪音)",
+        location: "自強九舍門口",
+        seller: "地政三・郭同學",
+        verified: true,
+        image: "https://images.unsplash.com/photo-1584992236310-6edddc08acff?w=600&auto=format&fit=crop&q=80",
+        description: "宿舍租約滿退宿出清，製冷速度快，需自備推車或小客車自取。"
+      },
+      {
+        id: 6,
+        title: "【全新未拆】羅技 MX Master 3S 人體工學無線滑鼠",
+        category: "3c",
+        schoolId: "ntu",
+        schoolName: "國立臺灣大學",
+        price: 2200,
+        originalPrice: 3290,
+        tradeType: "buy",
+        tradeLabel: "💰 現金/可議",
+        condition: "全新品未開封",
+        location: "小福廣場或公館站",
+        seller: "財金二・劉同學",
+        verified: true,
+        image: "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?w=600&auto=format&fit=crop&q=80",
+        description: "靜音鍵軸點擊無擾，台大校內面交可議價，亦可換未拆封之機械鍵盤。"
+      },
+      {
+        id: 7,
+        title: "【8成新】IKEA 經典高背人體工學升降辦公椅",
+        category: "dorm",
+        schoolId: "nycu",
+        schoolName: "國立陽明交通",
+        price: 600,
+        originalPrice: 2290,
+        tradeType: "buy",
+        tradeLabel: "💰 便宜讓售",
+        condition: "8成新 (氣壓桿正常)",
+        location: "交大研三舍管理室",
+        seller: "生科碩一・許同學",
+        verified: true,
+        image: "https://images.unsplash.com/photo-1580481077195-c3a82145d875?w=600&auto=format&fit=crop&q=80",
+        description: "久坐敲程式不易腰酸，更換新電競椅低價讓出，交大校內自取優先。"
+      },
+      {
+        id: 8,
+        title: "【9成新】Mankiw 經濟學原理 Principles of Economics 9e",
+        category: "book",
+        schoolId: "nccu",
+        schoolName: "國立政治大學",
+        price: 500,
+        originalPrice: 1350,
+        tradeType: "buy",
+        tradeLabel: "💰 現金買賣",
+        condition: "9成新 (重點章節螢光筆)",
+        location: "商學院一樓中庭",
+        seller: "經濟二・徐同學",
+        verified: true,
+        image: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&auto=format&fit=crop&q=80",
+        description: "商管大一必修權威教科書，隨書贈送期中整理重點講義一份。"
+      }
+    ];
+
+    let currentTradeType = 'all';
+    let currentTag = 'all';
+
+    function renderProducts(items) {
+      const grid = document.getElementById('productGrid');
+      const emptyState = document.getElementById('emptyState');
+      const countLabel = document.getElementById('itemCount');
+
+      countLabel.textContent = `共 ${items.length} 項魔法物品`;
+
+      if (items.length === 0) {
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+      grid.innerHTML = items.map(item => `
+        <div class="pony-card overflow-hidden flex flex-col justify-between group">
+          <div class="relative h-46 bg-pink-100 overflow-hidden">
+            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-106 transition-transform duration-500">
+            
+            <div class="absolute top-2.5 left-2.5">
+              <span class="sparkle-tag text-[10px] font-extrabold px-2.5 py-0.5 rounded-full text-pink-700">
+                ${item.tradeLabel}
+              </span>
+            </div>
+
+            <button onclick="toggleFavorite(event, this)" class="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-white/95 text-xs flex items-center justify-center border-2 border-pink-200 text-pink-500 shadow-xs hover:scale-110 transition-transform">
+              💖
+            </button>
+
+            <div class="absolute bottom-2 left-2.5 text-[10px] px-2.5 py-0.5 rounded-full bg-purple-900/80 text-white font-extrabold shadow-xs">
+              🏰 ${item.schoolName}
+            </div>
+          </div>
+
+          <div class="p-4 flex-1 flex flex-col justify-between">
+            <div>
+              <div class="text-[10px] text-pink-500 mb-1 flex items-center gap-1 font-bold">
+                <span class="text-green-600 font-extrabold">✓ .edu.tw 認證小馬</span>
+                <span>•</span>
+                <span>${item.condition}</span>
+              </div>
+              <h3 class="font-extrabold text-xs text-purple-900 line-clamp-2 leading-relaxed group-hover:text-pink-600 transition-colors mb-2">
+                ${item.title}
+              </h3>
+            </div>
+
+            <div class="pt-2 border-t-2 border-pink-100 mt-2">
+              <div class="flex items-baseline justify-between mb-2.5">
+                <div>
+                  ${item.price > 0 
+                    ? `<span class="text-base font-black text-pink-600">NT$ ${item.price}</span>
+                       <span class="text-[10px] text-purple-300 line-through ml-1">NT$ ${item.originalPrice}</span>`
+                    : item.tradeType === 'swap'
+                      ? `<span class="text-xs font-extrabold text-purple-700 bg-purple-100 px-2 py-0.5 rounded-full border border-purple-200">物品等價交換</span>`
+                      : `<span class="text-sm font-black text-emerald-600">免費結緣 $0</span>`
+                  }
+                </div>
+                <span class="text-[10px] font-bold text-purple-400">📍 ${item.location.slice(0, 5)}...</span>
+              </div>
+
+              <button onclick="showProductDetail(${item.id})" class="w-full bg-gradient-to-r from-pink-100 to-purple-100 hover:from-pink-200 hover:to-purple-200 text-purple-900 border-2 border-pink-300 text-xs py-2 rounded-full font-extrabold bubble-btn">
+                ✨ 查看詳情與出價
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterItems() {
+      const school = document.getElementById('schoolSelector').value;
+      const search = document.getElementById('searchInput').value.toLowerCase().trim();
+
+      let filtered = mockProducts.filter(item => {
+        const matchSchool = school === 'all' || item.schoolId === school;
+        const matchSearch = item.title.toLowerCase().includes(search) || 
+                            item.description.toLowerCase().includes(search) ||
+                            item.schoolName.toLowerCase().includes(search);
+        const matchTrade = currentTradeType === 'all' || item.tradeType === currentTradeType;
+        const matchTag = currentTag === 'all' || 
+                         (currentTag === 'book' && item.category === 'book') ||
+                         (currentTag === '3c' && item.category === '3c') ||
+                         (currentTag === 'dorm' && item.category === 'dorm') ||
+                         (currentTag === 'swap' && item.tradeType === 'swap') ||
+                         (currentTag === 'free' && item.tradeType === 'free');
+
+        return matchSchool && matchSearch && matchTrade && matchTag;
+      });
+
+      renderProducts(filtered);
+    }
+
+    function setTradeType(type) {
+      currentTradeType = type;
+      document.querySelectorAll('.trade-type-btn').forEach(btn => {
+        btn.classList.remove('bg-gradient-to-r', 'from-pink-500', 'to-purple-500', 'text-white', 'shadow-xs');
+        btn.classList.add('bg-pink-50', 'text-purple-800');
+      });
+      const activeBtn = document.getElementById(`btn-trade-${type}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-pink-50', 'text-purple-800');
+        activeBtn.classList.add('bg-gradient-to-r', 'from-pink-500', 'to-purple-500', 'text-white', 'shadow-xs');
+      }
+      filterItems();
+    }
+
+    function filterByTag(tag) {
+      currentTag = currentTag === tag ? 'all' : tag;
+      filterItems();
+    }
+
+    function sortItems() {
+      const sortType = document.getElementById('sortSelector').value;
+      let sorted = [...mockProducts];
+      if (sortType === 'price-asc') {
+        sorted.sort((a, b) => a.price - b.price);
+      } else if (sortType === 'price-desc') {
+        sorted.sort((a, b) => b.price - a.price);
+      } else {
+        sorted.sort((a, b) => b.id - a.id);
+      }
+      renderProducts(sorted);
+    }
+
+    function toggleFavorite(event, el) {
+      event.stopPropagation();
+      if (el.textContent.includes('💖')) {
+        el.textContent = '🦄';
+      } else {
+        el.textContent = '💖';
+      }
+    }
+
+    function showProductDetail(id) {
+      const item = mockProducts.find(p => p.id === id);
+      if (!item) return;
+
+      const modalContent = document.getElementById('modalContent');
+      modalContent.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="h-60 rounded-3xl overflow-hidden bg-pink-100 border-3 border-pink-200">
+            <img src="${item.image}" alt="${item.title}" class="w-full h-full object-cover">
+          </div>
+
+          <div class="flex flex-col justify-between text-xs font-bold text-purple-900">
+            <div>
+              <div class="flex items-center gap-2 mb-2">
+                <span class="sparkle-tag text-pink-700 px-2.5 py-0.5 rounded-full font-extrabold">${item.tradeLabel}</span>
+                <span class="text-purple-600">🏰 ${item.schoolName}</span>
+              </div>
+
+              <h2 class="font-extrabold text-base text-purple-900 leading-snug mb-2">
+                ${item.title}
+              </h2>
+
+              <div class="p-3 bg-gradient-to-r from-pink-50 to-purple-50 border-2 border-pink-200 rounded-2xl my-2">
+                <div class="text-xl font-black text-pink-600">
+                  ${item.price > 0 ? `NT$ ${item.price}` : item.tradeType === 'swap' ? '🔄 徵求以物易物' : '🎁 免費結緣 $0'}
+                </div>
+                <div class="text-[11px] text-purple-400 mt-0.5">
+                  市場原購：NT$ ${item.originalPrice}・物況：${item.condition}
+                </div>
+              </div>
+
+              <p class="text-purple-800 leading-relaxed mb-3">
+                ${item.description}
+              </p>
+
+              <div class="space-y-1 text-purple-600 border-t-2 border-pink-100 pt-2 mb-3">
+                <div>刊登小馬：<span class="text-purple-900 font-extrabold">${item.seller}</span> (友誼星等 5.0 ★★★★★)</div>
+                <div>安全交貨點：<span class="text-pink-600 font-extrabold">${item.location}</span></div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-2.5 pt-2">
+              <button onclick="alert('💬 已建立與 ${item.seller} 之面交私訊！'); closeModal('detailModal');" class="bg-pink-100 hover:bg-pink-200 text-purple-900 border-2 border-pink-300 py-2.5 rounded-full font-extrabold bubble-btn">
+                💬 敲敲私訊
+              </button>
+              <button onclick="alert('✨ 出價與交換意向已成功送出！'); closeModal('detailModal');" class="bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white py-2.5 rounded-full font-extrabold bubble-btn shadow-md">
+                ${item.tradeType === 'swap' ? '🔄 提出交換申請' : '💰 直接預訂'}
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('detailModal').classList.remove('hidden');
+    }
+
+    function calcAiPrice() {
+      document.getElementById('aiResultBox').classList.remove('hidden');
+      alert('✨ 水晶球已連接全台各校二手成交魔法庫！');
+    }
+
+    function sendChatMessage() {
+      const input = document.getElementById('userChatInput');
+      const val = input.value.trim();
+      if (!val) return;
+      const chat = document.getElementById('chatMessages');
+      chat.innerHTML += `
+        <div class="bg-gradient-to-r from-pink-400 to-purple-400 text-white p-3 rounded-2xl max-w-[85%] ml-auto">
+          ${val}
+        </div>
+        <div class="bg-pink-50 border border-pink-200 p-3 rounded-2xl text-purple-900 max-w-[85%]">
+          已感應到你的心願「${val}」！推薦你看看台大與成大的超棒教科書與 3C 哦！
+        </div>
+      `;
+      input.value = '';
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function handleNewListing(e) {
+      e.preventDefault();
+      const title = document.getElementById('newTitle').value;
+      const price = parseInt(document.getElementById('newPrice').value) || 0;
+      const schoolId = document.getElementById('newSchool').value;
+      const tradeType = document.getElementById('newTradeType').value;
+      const note = document.getElementById('newNote').value;
+
+      const schoolMap = {
+        ntu: '國立臺灣大學',
+        nycu: '國立陽明交通',
+        nthu: '國立清華大學',
+        ncku: '國立成功大學',
+        nccu: '國立政治大學'
+      };
+
+      const newItem = {
+        id: Date.now(),
+        title: title,
+        category: document.getElementById('newCategory').value,
+        schoolId: schoolId,
+        schoolName: schoolMap[schoolId] || '國立大學',
+        price: price,
+        originalPrice: price * 2,
+        tradeType: tradeType,
+        tradeLabel: tradeType === 'swap' ? '🔄 物品交換' : tradeType === 'free' ? '🎁 0元結緣' : '💰 現金買賣',
+        condition: '良好 (個人自用)',
+        location: note || '總圖書館正門',
+        seller: '我 (已認證小馬)',
+        verified: true,
+        image: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=600&auto=format&fit=crop&q=80',
+        description: note || '同學自用閒置物品，歡迎面交或物品交換！'
+      };
+
+      mockProducts.unshift(newItem);
+      renderProducts(mockProducts);
+      closeModal('listingModal');
+      alert('🦄 哇！你的寶物已經成功刊登到彩虹小馬市集囉！');
+    }
+
+    function resetFilters() {
+      document.getElementById('schoolSelector').value = 'all';
+      document.getElementById('searchInput').value = '';
+      currentTradeType = 'all';
+      currentTag = 'all';
+      setTradeType('all');
+      renderProducts(mockProducts);
+    }
+
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+    function openAiPriceModal() { openModal('aiPriceModal'); }
+    function openAiChatModal() { openModal('aiChatModal'); }
+    function openListingModal() { openModal('listingModal'); }
+    function openMapModal() { openModal('mapModal'); }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderProducts(mockProducts);
+    });
+  </script>
+</body>
+</html>

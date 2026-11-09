@@ -1,0 +1,702 @@
+[
+  {
+    "test_id": "TC001",
+    "function_id": "F01",
+    "category": "正常情境",
+    "description": "首頁載入時完整呈現 8 筆預設商品卡片，包含圖片、價格、學校與標籤",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC002",
+    "function_id": "F06",
+    "category": "正常情境",
+    "description": "切換學校基地至『國立臺灣大學』，精準篩選出台大所屬商品",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC003",
+    "function_id": "F06",
+    "category": "正常情境",
+    "description": "切換學校基地至『國立陽明交通』，精準篩選出交大所屬商品",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC004",
+    "function_id": "F06",
+    "category": "正常情境",
+    "description": "切換學校基地至『國立清華大學』，精準篩選出清大所屬商品",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC005",
+    "function_id": "F06",
+    "category": "正常情境",
+    "description": "切換學校基地至『國立成功大學』，精準篩選出成大所屬商品",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC006",
+    "function_id": "F06",
+    "category": "正常情境",
+    "description": "切換學校基地至『國立政治大學』，精準篩選出政大所屬商品",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC007",
+    "function_id": "F03",
+    "category": "正常情境",
+    "description": "點擊『必修教科書』分類標籤，過濾僅顯示教科書商品",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC008",
+    "function_id": "F03",
+    "category": "正常情境",
+    "description": "點擊『3C電子神裝』分類標籤，過濾僅顯示3C周邊商品",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC009",
+    "function_id": "F03",
+    "category": "正常情境",
+    "description": "點擊『宿舍家具電器』分類標籤，過濾僅顯示小冰箱、辦公椅等宿舍商品",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC010",
+    "function_id": "F08",
+    "category": "正常情境",
+    "description": "切換戰鬥型態至『現金收購』，篩選出一般買賣商品",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC011",
+    "function_id": "F08",
+    "category": "正常情境",
+    "description": "切換戰鬥型態至『以物換物』，篩選出接受物品交換的商品",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC012",
+    "function_id": "F08",
+    "category": "正常情境",
+    "description": "切換戰鬥型態至『0元免費結緣』，篩選出免費結緣物資",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC013",
+    "function_id": "F04",
+    "category": "正常情境",
+    "description": "搜尋關鍵字『微積分』，即時過濾出 Stewart Calculus 原文書",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC014",
+    "function_id": "F04",
+    "category": "正常情境",
+    "description": "搜尋關鍵字『iPad』，即時過濾出 iPad Air 4 太空灰",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC015",
+    "function_id": "F04",
+    "category": "正常情境",
+    "description": "搜尋關鍵字『Sony』，即時過濾出 WH-1000XM4 降噪耳機",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC016",
+    "function_id": "F04",
+    "category": "正常情境",
+    "description": "搜尋關鍵字『滑鼠』，即時過濾出羅技 MX Master 3S",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC017",
+    "function_id": "F04",
+    "category": "正常情境",
+    "description": "搜尋關鍵字『冰箱』，即時過濾出宿舍節能雙門小冰箱",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC018",
+    "function_id": "F05",
+    "category": "正常情境",
+    "description": "點擊『500元內』快捷預算，過濾售價小於等於 500 元之商品",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC019",
+    "function_id": "F05",
+    "category": "正常情境",
+    "description": "點擊『2000元內』快捷預算，過濾售價小於等於 2000 元之商品",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC020",
+    "function_id": "F05",
+    "category": "正常情境",
+    "description": "手動輸入最低價 400 與最高價 1000，正確檢索區間內商品",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC021",
+    "function_id": "F07",
+    "category": "正常情境",
+    "description": "切換排序至『價格由低至高』，驗證商品價格依序遞增",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC022",
+    "function_id": "F07",
+    "category": "正常情境",
+    "description": "切換排序至『價格由高至低』，驗證商品價格依序遞減",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC023",
+    "function_id": "F07",
+    "category": "正常情境",
+    "description": "切換排序至『最新上架優先』，驗證依上架時間或ID降序排列",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC024",
+    "function_id": "F02",
+    "category": "正常情境",
+    "description": "點擊任一商品卡片，彈出詳細資訊 Modal，展示品名、原價與物況",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC025",
+    "function_id": "F02",
+    "category": "正常情境",
+    "description": "在商品詳細頁點擊切換內頁實拍縮圖，主圖即時切換",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC026",
+    "function_id": "F09",
+    "category": "正常情境",
+    "description": "點擊商品卡片之星號按鈕加入收藏，頂部星號計數徽章增為 1",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC027",
+    "function_id": "F09",
+    "category": "正常情境",
+    "description": "打開收藏清單抽屜，正確列出剛收藏的商品項目",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC028",
+    "function_id": "F09",
+    "category": "正常情境",
+    "description": "在收藏抽屜內點擊取消收藏，項目即時移出且清單更新",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC029",
+    "function_id": "F10",
+    "category": "正常情境",
+    "description": "檢驗手機版專屬底部導覽列元素存在，具備市集、AI、刊登、收藏、我的五大導覽",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC030",
+    "function_id": "F11",
+    "category": "正常情境",
+    "description": "輸入有效之臺大學生信箱 b11902000@ntu.edu.tw 與密碼，成功登入特工帳號",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC031",
+    "function_id": "F20",
+    "category": "正常情境",
+    "description": "登入後個人身分顯示『.edu.tw 認證』藍勾標章",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC032",
+    "function_id": "F11",
+    "category": "正常情境",
+    "description": "點擊忘記密碼並輸入合規之學生信箱，系統提示重設驗證信已送出",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC033",
+    "function_id": "F11",
+    "category": "正常情境",
+    "description": "點擊登出按鈕，身分切換回『訪客同學』，認證徽章灰階化",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC034",
+    "function_id": "F12",
+    "category": "正常情境",
+    "description": "開啟特工個人基地抽屜，正確顯示目前使用者姓名與所屬系所",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC035",
+    "function_id": "F14",
+    "category": "正常情境",
+    "description": "在個人基地將自己刊登的商品狀態由『上架中』變更為『已預訂』",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC036",
+    "function_id": "F14",
+    "category": "正常情境",
+    "description": "在個人基地將商品狀態變更為『交易完成』，反映最新進度",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC037",
+    "function_id": "F13",
+    "category": "正常情境",
+    "description": "完整填寫上架表單（品名、分類、學校、價格、面交地標），成功發布新商品",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC038",
+    "function_id": "F13",
+    "category": "正常情境",
+    "description": "新上架之商品即時出現在商品列表最上方，狀態為『上架中』",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC039",
+    "function_id": "F15",
+    "category": "正常情境",
+    "description": "在交換商品頁提出以物易物提案，填寫交換品『Switch 遊戲卡匣』與補貼差價 200 元",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC040",
+    "function_id": "F16",
+    "category": "正常情境",
+    "description": "在商品詳細頁發表公開問答『請問書本哪一年出版的？』，成功展示於問答列表",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC041",
+    "function_id": "F17",
+    "category": "正常情境",
+    "description": "個人基地抽屜中正確記錄歷史購買與贈送之完成紀錄",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC042",
+    "function_id": "F18",
+    "category": "正常情境",
+    "description": "通知中心展示未讀之留言提問與降價通知",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC043",
+    "function_id": "F18",
+    "category": "正常情境",
+    "description": "點擊『全部標為已讀』按鈕，通知狀態由未讀轉為已讀灰階",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC044",
+    "function_id": "F19",
+    "category": "正常情境",
+    "description": "點擊商品檢舉按鈕，填寫檢舉違規理由送出案件",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC045",
+    "function_id": "F19",
+    "category": "正常情境",
+    "description": "開啟管理員後台 Modal，審查待處理之檢舉清單並執行處置",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC046",
+    "function_id": "AI01",
+    "category": "正常情境",
+    "description": "點擊 AI 拍照速估，完成神經網絡 OCR 辨識並自動將書名與價格代入刊登表單",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC047",
+    "function_id": "AI02",
+    "category": "正常情境",
+    "description": "開啟 AI 二手估價機，輸入 Stewart 8e，成功計算合理定價區間並展示估算值聲明",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC048",
+    "function_id": "AI03",
+    "category": "正常情境",
+    "description": "點擊查看 AI 個人化推薦清單，依歷史關注自動過濾推薦教材",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC049",
+    "function_id": "AI04",
+    "category": "正常情境",
+    "description": "在 AI 導購聊天室輸入『找 3000 元內平板』，AI 精準推薦 iPad Air 交換項目",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC050",
+    "function_id": "AI04",
+    "category": "正常情境",
+    "description": "在 AI 導購聊天室詢問『成大勝利校區面交』，AI 推薦 Sony 降噪耳機",
+    "type": "NORMAL"
+  },
+  {
+    "test_id": "TC051",
+    "function_id": "F01",
+    "category": "邊界情境",
+    "description": "商品價格為 0 元 (免費結緣贈送物資)，驗證介面正確顯示『免費結緣 $0』而非錯誤數值",
+    "type": "BOUNDARY"
+  },
+  {
+    "test_id": "TC052",
+    "function_id": "F05",
+    "category": "邊界情境",
+    "description": "預算最低價與最高價皆輸入 0 元，精準過濾出所有 0 元免費贈送物資",
+    "type": "BOUNDARY"
+  },
+  {
+    "test_id": "TC053",
+    "function_id": "F05",
+    "category": "邊界情境",
+    "description": "預算最高價輸入極大數值 999999，系統不當機且完整包含高價位商品",
+    "type": "BOUNDARY"
+  },
+  {
+    "test_id": "TC054",
+    "function_id": "F04",
+    "category": "邊界情境",
+    "description": "搜尋關鍵字輸入單一字元『課』，模糊比對成功返回相關教科書",
+    "type": "BOUNDARY"
+  },
+  {
+    "test_id": "TC055",
+    "function_id": "F04",
+    "category": "邊界情境",
+    "description": "搜尋關鍵字輸入前後帶有大量空白字元『   微積分   』，系統自動去除首尾空格並正確檢索",
+    "type": "BOUNDARY"
+  },
+  {
+    "test_id": "TC056",
+    "function_id": "F04",
+    "category": "邊界情境",
+    "description": "搜尋關鍵字包含英數大小寫混雜『sOnY Wh-1000xM4』，能不區分大小寫精準匹配",
+    "type": "BOUNDARY"
+  },
+  {
+    "test_id": "TC057",
+    "function_id": "F05",
+    "category": "邊界情境",
+    "description": "價格範圍最低價輸入等於最高價 (如 450 ~ 450)，精準過濾僅等於 450 元之商品",
+    "type": "BOUNDARY"
+  },
+  {
+    "test_id": "TC058",
+    "function_id": "F13",
+    "category": "邊界情境",
+    "description": "上傳商品實體照片剛好達上限 5 張，檔案總大小合法，系統順利通過驗證",
+    "type": "BOUNDARY"
+  },
+  {
+    "test_id": "TC059",
+    "function_id": "F13",
+    "category": "邊界情境",
+    "description": "上傳單張照片檔案大小剛好為 4.9MB (<5MB 邊界)，通過大小檢查",
+    "type": "BOUNDARY"
+  },
+  {
+    "test_id": "TC060",
+    "function_id": "F13",
+    "category": "邊界情境",
+    "description": "商品標題輸入剛好達 100 字元上限之超長書名規格，介面版面不溢出破版",
+    "type": "BOUNDARY"
+  },
+  {
+    "test_id": "TC061",
+    "function_id": "F13",
+    "category": "邊界情境",
+    "description": "商品價格設定為 1 元 (最低買賣邊界)，介面正常接受並標示 NT$ 1",
+    "type": "BOUNDARY"
+  },
+  {
+    "test_id": "TC062",
+    "function_id": "F15",
+    "category": "邊界情境",
+    "description": "以物易物補差價欄位輸入 0 元 (純粹等價物資互換，不涉及現金)，提案成功送出",
+    "type": "BOUNDARY"
+  },
+  {
+    "test_id": "TC063",
+    "function_id": "F15",
+    "category": "邊界情境",
+    "description": "以物易物補差價輸入高額差價 15000 元 (如舊機貼錢換高階筆電)，提案成功送出",
+    "type": "BOUNDARY"
+  },
+  {
+    "test_id": "TC064",
+    "function_id": "F16",
+    "category": "邊界情境",
+    "description": "公開問答留言內容包含標點符號與特殊換行字元，文字排版正常且無 XSS 風險",
+    "type": "BOUNDARY"
+  },
+  {
+    "test_id": "TC065",
+    "function_id": "F09",
+    "category": "邊界情境",
+    "description": "收藏清單將全部 8 筆預設商品全數收藏，抽屜捲軸正常滾動且未造成頁面卡頓",
+    "type": "BOUNDARY"
+  },
+  {
+    "test_id": "TC066",
+    "function_id": "F06",
+    "category": "邊界情境",
+    "description": "選擇學校選單之『全美漫大學基地』(全部跨校)，恢復顯示全台各校所有商品",
+    "type": "BOUNDARY"
+  },
+  {
+    "test_id": "TC067",
+    "function_id": "AI02",
+    "category": "邊界情境",
+    "description": "AI 二手估價輸入全新盒裝未拆 (品況滿分10)，演算法計算之二手定價不超過原購定價",
+    "type": "BOUNDARY"
+  },
+  {
+    "test_id": "TC068",
+    "function_id": "AI02",
+    "category": "邊界情境",
+    "description": "AI 二手估價原購金額輸入 100 元 (低價書籍)，估價結果合理且不出現負數金額",
+    "type": "BOUNDARY"
+  },
+  {
+    "test_id": "TC069",
+    "function_id": "F18",
+    "category": "邊界情境",
+    "description": "通知中心未讀通知數量為 0 時，已讀標記按鈕不觸發異常崩潰",
+    "type": "BOUNDARY"
+  },
+  {
+    "test_id": "TC070",
+    "function_id": "F10",
+    "category": "邊界情境",
+    "description": "視窗寬度調整至 320px 超小螢幕極限寬度，底部導覽列與卡片圖文依然對齊無跑版",
+    "type": "BOUNDARY"
+  },
+  {
+    "test_id": "TC071",
+    "function_id": "F05",
+    "category": "錯誤情境",
+    "description": "最高價輸入小於最低價 (如最低 1000、最高 500)，系統立即顯示『最高價不可小於最低價』警告",
+    "type": "ERROR"
+  },
+  {
+    "test_id": "TC072",
+    "function_id": "F04",
+    "category": "錯誤情境",
+    "description": "搜尋完全不存在之奇異關鍵字『xyz999虛擬物品』，系統正確呈現美漫 OOPS 空白狀態提示",
+    "type": "ERROR"
+  },
+  {
+    "test_id": "TC073",
+    "function_id": "F11",
+    "category": "錯誤情境",
+    "description": "註冊時輸入非學校信箱 (如 gmail.com 或 yahoo.com.tw)，系統阻擋並提示必須為 .edu.tw 信箱",
+    "type": "ERROR"
+  },
+  {
+    "test_id": "TC074",
+    "function_id": "F11",
+    "category": "錯誤情境",
+    "description": "註冊時輸入格式錯誤之郵件字串『not-an-email』，瀏覽器表單檢驗阻擋送出",
+    "type": "ERROR"
+  },
+  {
+    "test_id": "TC075",
+    "function_id": "F11",
+    "category": "錯誤情境",
+    "description": "註冊或登入時密碼長度小於 6 位數，觸發長度不足錯誤提醒",
+    "type": "ERROR"
+  },
+  {
+    "test_id": "TC076",
+    "function_id": "F13",
+    "category": "錯誤情境",
+    "description": "上傳商品實體照片超過 5 張限制 (上傳 6 張)，系統即時阻擋並警示超過上限",
+    "type": "ERROR"
+  },
+  {
+    "test_id": "TC077",
+    "function_id": "F13",
+    "category": "錯誤情境",
+    "description": "上傳單張照片檔案大小超過 5MB (如 8MB 檔案)，系統即時警示檔案過大並清空無效檔案",
+    "type": "ERROR"
+  },
+  {
+    "test_id": "TC078",
+    "function_id": "F13",
+    "category": "錯誤情境",
+    "description": "刊登物品表單漏填必填之『裝備名稱』，HTML5 必填檢查阻止表單發布",
+    "type": "ERROR"
+  },
+  {
+    "test_id": "TC079",
+    "function_id": "F13",
+    "category": "錯誤情境",
+    "description": "刊登物品表單漏填必填之『面交地標指引』，系統提示請填寫完整資訊",
+    "type": "ERROR"
+  },
+  {
+    "test_id": "TC080",
+    "function_id": "F13",
+    "category": "錯誤情境",
+    "description": "刊登物品價格輸入負數金額 (如 -500 元)，表單 min=0 限制阻擋非法負值",
+    "type": "ERROR"
+  },
+  {
+    "test_id": "TC081",
+    "function_id": "F16",
+    "category": "錯誤情境",
+    "description": "公開問答中輸入包含手機號碼『0912-345-678』，系統自動過濾遮蔽為『***-***-***』並顯示防護警告",
+    "type": "ERROR"
+  },
+  {
+    "test_id": "TC082",
+    "function_id": "F16",
+    "category": "錯誤情境",
+    "description": "公開問答中輸入包含不帶連字符手機號碼『0912345678』，Regex 防護引擎精準遮蔽個資",
+    "type": "ERROR"
+  },
+  {
+    "test_id": "TC083",
+    "function_id": "F16",
+    "category": "錯誤情境",
+    "description": "公開問答中輸入包含私人電子信箱『student@private.com』，自動遮蔽電子郵件防止個資外洩",
+    "type": "ERROR"
+  },
+  {
+    "test_id": "TC084",
+    "function_id": "F16",
+    "category": "錯誤情境",
+    "description": "公開問答輸入全空白字元送出，系統判定無效不新增空白留言",
+    "type": "ERROR"
+  },
+  {
+    "test_id": "TC085",
+    "function_id": "F09",
+    "category": "錯誤情境",
+    "description": "針對已收藏之商品重複點擊收藏按鈕，系統智慧切換為取消收藏而不產生重複資料",
+    "type": "ERROR"
+  },
+  {
+    "test_id": "TC086",
+    "function_id": "F20",
+    "category": "錯誤情境",
+    "description": "忘記密碼功能輸入非 .edu.tw 學生信箱，系統拒絕發送並要求提供有效學校信箱",
+    "type": "ERROR"
+  },
+  {
+    "test_id": "TC087",
+    "function_id": "F19",
+    "category": "錯誤情境",
+    "description": "檢舉商品未選擇檢舉原因直接送出，表單檢驗阻止未填寫之無效檢舉",
+    "type": "ERROR"
+  },
+  {
+    "test_id": "TC088",
+    "function_id": "AI04",
+    "category": "錯誤情境",
+    "description": "AI 導購聊天輸入全空白字串點擊送出，系統忽略不送出空訊息",
+    "type": "ERROR"
+  },
+  {
+    "test_id": "TC089",
+    "function_id": "AI02",
+    "category": "錯誤情境",
+    "description": "AI 估價機原購金額輸入 0 元，系統自動套用最低基準不產生除以零崩潰",
+    "type": "ERROR"
+  },
+  {
+    "test_id": "TC090",
+    "function_id": "F15",
+    "category": "錯誤情境",
+    "description": "以物易物提案交換物名稱為空字串，系統取消提案不建立無效交換意向",
+    "type": "ERROR"
+  },
+  {
+    "test_id": "TC091",
+    "function_id": "F20",
+    "category": "權限情境",
+    "description": "勾選『僅顯示 .edu.tw 認證賣家』時，非認證帳號刊登之商品自動隱藏",
+    "type": "PERMISSION"
+  },
+  {
+    "test_id": "TC092",
+    "function_id": "F11",
+    "category": "權限情境",
+    "description": "訪客未登入狀態下，個人基地抽屜清楚標記『訪客身分 (未驗證)』且無綠色認證標章",
+    "type": "PERMISSION"
+  },
+  {
+    "test_id": "TC093",
+    "function_id": "F14",
+    "category": "權限情境",
+    "description": "賣家將自己商品設定為『已下架』後，公開市集搜尋與列表立即移除該商品",
+    "type": "PERMISSION"
+  },
+  {
+    "test_id": "TC094",
+    "function_id": "F14",
+    "category": "權限情境",
+    "description": "下架之商品不對外曝光，但原賣家在個人管理抽屜中仍能保留查看紀錄",
+    "type": "PERMISSION"
+  },
+  {
+    "test_id": "TC095",
+    "function_id": "F19",
+    "category": "權限情境",
+    "description": "管理員後台 Modal 僅限管理者調用，一般前台商品卡片僅能觸發檢舉不可直接刪除他人商品",
+    "type": "PERMISSION"
+  },
+  {
+    "test_id": "TC096",
+    "function_id": "F19",
+    "category": "權限情境",
+    "description": "管理員於後台點擊『確認下架處置』後，違規案件即刻標記為已結案處置",
+    "type": "PERMISSION"
+  },
+  {
+    "test_id": "TC097",
+    "function_id": "F19",
+    "category": "權限情境",
+    "description": "管理員於後台點擊『駁回無違規』後，案件恢復正常並記錄駁回仲裁",
+    "type": "PERMISSION"
+  },
+  {
+    "test_id": "TC098",
+    "function_id": "F20",
+    "category": "權限情境",
+    "description": "驗證成功之學生帳號，於刊登新物品時自動繼承已認證特工屬性 (verified=true)",
+    "type": "PERMISSION"
+  },
+  {
+    "test_id": "TC099",
+    "function_id": "F14",
+    "category": "權限情境",
+    "description": "商品被標記為『已預訂』時，商品卡片與詳細頁清楚提示洽談中狀態",
+    "type": "PERMISSION"
+  },
+  {
+    "test_id": "TC100",
+    "function_id": "F14",
+    "category": "權限情境",
+    "description": "商品被標記為『交易完成』時，歷史紀錄完整歸檔不可重複出價",
+    "type": "PERMISSION"
+  }
+]
